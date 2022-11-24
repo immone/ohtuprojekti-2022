@@ -9,6 +9,7 @@ packages = [{include = "ohtuprojekti_2022"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+python-dotenv = "^0.21.0"
 
 
 [tool.poetry.group.dev.dependencies]
