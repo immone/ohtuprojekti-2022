@@ -4,10 +4,10 @@
 
 # Definition of Done
 
-Markup : * Each user story must be defined in terms of a Robots framework syntax
-         * >70% test coverage
-         * Product owner may access the code and tests via CI
-         * Code maintainability: 
-           * Clear naming scheme
-           * Coherent coding style and project architechture
-           * Use of conventional commits in GitHub
+* Each user story must be defined in terms of a Robots framework syntax
+* Above 70% test coverage
+* Product owner may access the code and tests via CI
+* Code maintainability: 
+        * Clear naming scheme
+        * Coherent coding style and project architechture
+        * Use of conventional commits in GitHub
