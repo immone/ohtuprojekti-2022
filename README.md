@@ -8,6 +8,6 @@
 * Above 70% test coverage
 * Product owner may access the code and tests via CI
 * Code maintainability: 
-        * Clear naming scheme
-        * Coherent coding style and project architechture
-        * Use of conventional commits in GitHub
+  * Clear naming scheme
+  * Coherent coding style and project architechture
+  * Use of conventional commits in GitHub
