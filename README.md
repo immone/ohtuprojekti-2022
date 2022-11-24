@@ -4,10 +4,13 @@
 
 # Definition of Done
 
+To updated during first sprint
+
 * Each user story must be defined in terms of a Robots framework syntax
+  * README links to the files as per this definition
 * Above 70% test coverage
 * Product owner may access the code and tests via CI
 * Code maintainability: 
   * Clear naming scheme
-  * Coherent coding style and project architechture
+  * Coherent coding style and project architecture
   * Use of conventional commits in GitHub
