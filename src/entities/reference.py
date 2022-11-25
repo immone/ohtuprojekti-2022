@@ -6,6 +6,9 @@ class Reference:
         self.__year = year
         self.__publisher = publisher
 
+    def __str__(self) -> str:
+        return f"{', '.join(self.authors)}. {self.title}. {self.publisher}, {self.year}."
+        
     @property
     def reference_id(self):
         return self.__reference_id
