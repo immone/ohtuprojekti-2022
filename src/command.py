@@ -24,15 +24,18 @@ class Command:
         publisher = self.__query_non_empty("Enter publisher: ",
             "Please provide a publisher")
 
-        self.repository.post(Reference(
-            reference_id=reference_id,
-            authors=authors,
-            title=title,
-            year=year,
-            publisher=publisher
-        ))
-
-        print("\nReference added.")
+        try:
+            self.repository.post(Reference(
+                reference_id=reference_id,
+                authors=authors,
+                title=title,
+                year=year,
+                publisher=publisher
+            ))
+            print("\nReference added.")
+        except:
+            print("\nA database error occurred. Failed to add reference.")
+            quit()
 
     def __query_non_empty(self, prompt, empty_msg):
         query = input(prompt)
@@ -43,7 +46,12 @@ class Command:
         return query
 
     def __check_id_unique(self, ref_id):
-        references = self.repository.get_all()
+        try:
+            references = self.repository.get_all()
+        except:
+            print("\nA database error occurred.")
+            quit()
+
         for ref in references:
             if ref.reference_id == ref_id:
                 return False
