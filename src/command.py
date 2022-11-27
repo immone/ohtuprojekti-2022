@@ -1,3 +1,4 @@
+import sys
 from entities.reference import Reference
 
 
@@ -34,8 +35,7 @@ class Command:
             ))
             print("\nReference added.")
         except:
-            print("\nA database error occurred. Failed to add reference.")
-            quit()
+            sys.exit("\nA database error occurred. Failed to add reference.")
 
     def __query_non_empty(self, prompt, empty_msg):
         query = input(prompt)
@@ -49,8 +49,7 @@ class Command:
         try:
             references = self.repository.get_all()
         except:
-            print("\nA database error occurred.")
-            quit()
+            sys.exit("\nA database error occurred.")
 
         for ref in references:
             if ref.reference_id == ref_id:
