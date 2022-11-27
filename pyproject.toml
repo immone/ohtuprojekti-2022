@@ -5,7 +5,6 @@ description = "miniprojekti"
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "ohtuprojekti_2022"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
