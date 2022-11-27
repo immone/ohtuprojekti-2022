@@ -1,3 +1,6 @@
+from entities.reference import Reference
+
+
 class Command:
     def __init__(self, repository=None):
         self.repository = repository
@@ -7,16 +10,28 @@ class Command:
 
         reference_id = self.__query_non_empty("Enter reference ID: ",
             "Please provide a reference ID")
-        # TODO: use repository object to ensure ID is unique
+
+        while not self.__check_id_unique(reference_id):
+            print("That ID is already taken")
+            reference_id = self.__query_non_empty("Enter reference ID: ",
+                "Please provide a reference ID")
 
         title = self.__query_non_empty("Enter reference title: ",
             "Please provide a reference title")
 
         authors = self.__query_authors()
         year = self.__query_year()
+        publisher = self.__query_non_empty("Enter publisher: ",
+            "Please provide a publisher")
 
-        print(authors)
-        # TODO: use repository object to add reference
+        self.repository.post(Reference(
+            reference_id=reference_id,
+            authors=authors,
+            title=title,
+            year=year,
+            publisher=publisher
+        ))
+
         print("\nReference added.")
 
     def __query_non_empty(self, prompt, empty_msg):
@@ -26,6 +41,14 @@ class Command:
             query = input(prompt)
 
         return query
+
+    def __check_id_unique(self, ref_id):
+        references = self.repository.get_all()
+        for ref in references:
+            if ref.reference_id == ref_id:
+                return False
+
+        return True
 
     def __query_authors(self):
         num_authors = input("Enter the number of authors: ")

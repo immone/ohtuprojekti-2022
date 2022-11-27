@@ -1,5 +1,6 @@
 import sys
 from command import Command
+from repositories.reference_repository import ReferenceRepository
 
 
 def main():
@@ -8,7 +9,7 @@ def main():
         ## TODO: start interactive console
         return
 
-    command = Command() # TODO: inject repository
+    command = Command(ReferenceRepository())
     if args[0] == "add":
         command.add()
 
