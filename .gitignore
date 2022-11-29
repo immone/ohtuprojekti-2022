@@ -2,7 +2,6 @@
 vscode
 .DS_Store
 .coverage
-.coveragerc
 .pytest_cache
 htmlcov
 __pycache__
