@@ -6,7 +6,7 @@ from repositories.reference_repository import ReferenceRepository
 
 class TestTranslator(unittest.TestCase):
     def setUp(self):
-        self.repository_mock = Mock(wraps=ReferenceReposiitory())
+        self.repository_mock = Mock(wraps=ReferenceRepository())
         self.io_mock = Mock()
         self.repository_mock.get_all 
 
