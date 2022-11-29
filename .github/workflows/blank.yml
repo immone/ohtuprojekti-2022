@@ -37,7 +37,10 @@ jobs:
         
       - name: run pytest
         run: poetry run pytest
-        
+
+      - name: run coverage
+        run: poetry run invoke coverage
+
       - name: coverage report
         run: poetry run coverage xml
         
