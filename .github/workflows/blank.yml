@@ -34,9 +34,6 @@ jobs:
       
       - name: install dependencies
         run: poetry install 
- 
-      - name: build
-        run: py src/build.py
         
       - name: run pytest
         run: poetry run pytest
