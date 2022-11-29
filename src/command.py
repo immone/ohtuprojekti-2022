@@ -122,7 +122,7 @@ class Command:
                 print("Published in: ", ref.__year)
                 print("Published by: ", ref.__publisher, "\n")
 
-    ## TODO: does it make sense to delete based on the reference id?
+    ## TODO: does it make sense to edit based on the reference id?
     def edit(self):
         print("Attempting to edit a reference..")
 
@@ -130,6 +130,7 @@ class Command:
 
         ref_object = self.__get_reference_object(id_to_edit)
 
+        ## feel free to refactor to Python 3.10 match case or something alike
         field = self.__match_edit_field()
         if field == "author" or "authors":
             ref_object.__authors = field
@@ -151,7 +152,6 @@ class Command:
                                        "would you like to edit? (author, title, year, publisher)?",
                                        "Please provide a field").strip().lower()
 
-        ## feel free to refactor to Python 3.10 match case or something alike
         while field not in ["author", "title", "year", "publisher"]:
             print("Please give one of the listed fields")
             field = self.__query_non_empty("Which field of the given reference "
