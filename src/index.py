@@ -1,5 +1,6 @@
 import sys
 from commands.add import Add
+from commands.translator import Translator
 from repositories.reference_repository import ReferenceRepository
 from console_io import ConsoleIO
 
@@ -13,6 +14,9 @@ def main():
         add = Add(ReferenceRepository(), ConsoleIO())
         add.run()
 
+    if args[0] == "bibtex":
+        translator = Translator(ReferenceRepository(), ConsoleIO())
+        translator.run()
 
 if __name__ == "__main__":
     main()
