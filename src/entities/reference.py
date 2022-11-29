@@ -8,6 +8,12 @@ class Reference:
 
     def __str__(self) -> str:
         return f"{', '.join(self.authors)}. {self.title}. {self.publisher}, {self.year}."
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, self.__class__):
+            return other.to_dict() == self.to_dict()
+        else:
+            return False
         
     @property
     def reference_id(self):
