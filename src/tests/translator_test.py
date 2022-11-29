@@ -6,9 +6,15 @@ from repositories.reference_repository import ReferenceRepository
 
 class TestTranslator(unittest.TestCase):
     def setUp(self):
-        self.repository_mock = Mock(wraps=ReferenceRepository())
+        self.repository_mock = Mock()
+        self.repository_mock.get_all.return_value = [Reference(
+            reference_id="refid",
+            authors=["author"],
+            title="title",
+            year=2022,
+            publisher="publisher"
+            )]
         self.io_mock = Mock()
-        self.repository_mock.get_all 
 
     def test_tries_to_load_database(self):
         self.io_mock.read.side_effect = "A"
