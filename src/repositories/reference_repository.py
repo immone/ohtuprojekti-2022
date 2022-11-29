@@ -17,8 +17,17 @@ class ReferenceRepository:
         """Returns True if reference_id exists in the database"""
 
         cursor = self.__connection.cursor()
-        cursor.execute("SELECT * FROM reference WHERE reference_id = :reference_id",
-                       {"reference_id": reference_id})
+        cursor.execute(
+            """
+            SELECT 
+                * 
+            FROM 
+                reference 
+            WHERE 
+                reference_id = :reference_id
+            """,
+            {"reference_id": reference_id}
+        )
         reference = cursor.fetchone()
         return reference is not None
 
