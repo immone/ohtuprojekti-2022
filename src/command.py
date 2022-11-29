@@ -84,3 +84,26 @@ class Command:
             year = input("Enter reference year: ")
 
         return int(year)
+
+    def delete(self):
+        print("Attempting to remove a reference..")
+
+        id_to_remove = self.__check_id_exists()
+
+        try:
+            self.repository.delete(id_to_remove)
+            print("\nReference deleted.")
+        except:
+            sys.exit("\nAn error occurred while trying to delete reference. Exiting..")
+
+    def __check_id_exists(self):
+
+        reference_id = self.__query_non_empty("Enter reference ID: ",
+                                              "Please provide a reference ID")
+        # loop till given id exists in db
+        while self.repository.id_exists(reference_id) == False:
+            print("No such reference ID exists")
+            reference_id = self.__query_non_empty("Enter reference ID: ",
+                                                  "Please provide a reference ID")
+        return reference_id
+
