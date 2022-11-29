@@ -34,12 +34,12 @@ jobs:
       
       - name: install dependencies
         run: poetry install 
+ 
+      - name: build
+        run: py src/build.py
         
       - name: run pytest
         run: poetry run pytest
-        
-      - name: run pylint
-        run: poetry run pylint src
         
       - name: coverage report
         run: poetry run coverage xml
