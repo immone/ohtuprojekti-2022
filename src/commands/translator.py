@@ -9,9 +9,8 @@ class Translator:
 
     def run(self):
         reference_id = self.__query_saved_reference_id()
-           if reference_id = "A":
-                self.__print_all()
-            else:
+        if reference_id == "A":
+            self.__print_all()
 
     def __print_all(self):
         self.io.write("Trying to print all references...")
@@ -41,14 +40,13 @@ class Translator:
 
     def __query_saved_reference_id(self):
         while True:
-            reference_id = self.io.read("Enter reference ID or <A> to print all references: ",
-                                        "Please provide a reference ID")
+            reference_id = self.io.read("<A> to print all references: ","You need to input <A>")
 
-            if self.repository.id_exists(reference_id):
-                break
-            elif reference_id == "A"
+            #if self.repository.id_exists(reference_id):
+            #    break
+            if reference_id == "A":
                break
-            else:
-                self.io.write("ID not in the database")
+            #else:
+            #    self.io.write("ID not in the database")
 
-            return reference_id
+        return reference_id
