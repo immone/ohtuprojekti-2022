@@ -3,26 +3,27 @@ from entities.reference import Reference
 
 
 class Add:
-    def __init__(self, repository=None):
+    def __init__(self, repository, io):
         self.repository = repository
+        self.io = io
 
-    def add(self):
-        print("Adding new reference...")
+    def run(self):
+        self.io.write("Adding new reference...")
 
-        reference_id = self.__query_non_empty("Enter reference ID: ",
+        reference_id = self.io.read_non_empty("Enter reference ID: ",
             "Please provide a reference ID")
 
-        while not self.__check_id_unique(reference_id):
-            print("That ID is already taken")
-            reference_id = self.__query_non_empty("Enter reference ID: ",
+        while self.repository.id_exists(reference_id):
+            self.io.write("That ID is already taken")
+            reference_id = self.io.read_non_empty("Enter reference ID: ",
                 "Please provide a reference ID")
 
-        title = self.__query_non_empty("Enter reference title: ",
+        title = self.io.read_non_empty("Enter reference title: ",
             "Please provide a reference title")
 
         authors = self.__query_authors()
         year = self.__query_year()
-        publisher = self.__query_non_empty("Enter publisher: ",
+        publisher = self.io.read_non_empty("Enter publisher: ",
             "Please provide a publisher")
 
         try:
@@ -33,27 +34,19 @@ class Add:
                 year=year,
                 publisher=publisher
             ))
-            print("\nReference added.")
+            self.io.write("\nReference added.")
         except:
             sys.exit("\nA database error occurred. Failed to add reference.")
 
-    def __query_non_empty(self, prompt, empty_msg):
-        query = input(prompt)
-        while len(query) == 0:
-            print(empty_msg)
-            query = input(prompt)
-
-        return query
-
     def __query_authors(self):
-        num_authors = input("Enter the number of authors: ")
+        num_authors = self.io.read("Enter the number of authors: ")
         while not num_authors.isnumeric() or int(num_authors) == 0:
-            print("Please provide a valid number")
-            num_authors = input("Enter the number of authors: ")
+            self.io.write("Please provide a valid number")
+            num_authors = self.io.read("Enter the number of authors: ")
 
         authors = []
         for i in range(0, int(num_authors)):
-            author = self.__query_non_empty(f"Enter author {i + 1}: ",
+            author = self.io.read_non_empty(f"Enter author {i + 1}: ",
                 "Please provide an author")
 
             # if author is given in format lastname, firstname, parse that
@@ -66,9 +59,9 @@ class Add:
         return authors
 
     def __query_year(self):
-        year = input("Enter reference year: ")
+        year = self.io.read("Enter reference year: ")
         while not year.isnumeric() or int(year) <= 0:
-            print("Please provide a valid year")
-            year = input("Enter reference year: ")
+            self.io.write("Please provide a valid year")
+            year = self.io.read("Enter reference year: ")
 
         return int(year)

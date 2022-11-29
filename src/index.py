@@ -1,7 +1,7 @@
 import sys
-from command import Command
+from commands.add import Add
 from repositories.reference_repository import ReferenceRepository
-
+from console_io import ConsoleIO
 
 def main():
     args = sys.argv[1:]
@@ -9,9 +9,9 @@ def main():
         ## TODO: start interactive console
         return
 
-    command = Command(ReferenceRepository())
     if args[0] == "add":
-        command.add()
+        add = Add(ReferenceRepository(), ConsoleIO())
+        add.run()
 
 
 if __name__ == "__main__":
