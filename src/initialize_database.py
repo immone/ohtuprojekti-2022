@@ -47,6 +47,7 @@ def create_tables(connection):
          create table reference_author (
             reference_id text,
             author_id integer,
+            unique (reference_id, author_id),
             foreign key (reference_id) references reference(reference_id),
             foreign key (author_id) references author(author_id)
         );
