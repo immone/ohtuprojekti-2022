@@ -1,4 +1,5 @@
 import sys
+import datetime
 from entities.reference import Reference
 
 
@@ -18,9 +19,7 @@ class Add:
             reference_id = self.io.read_non_empty("Enter reference ID: ",
                 "Please provide a reference ID")
 
-        title = self.io.read_non_empty("Enter reference title: ",
-            "Please provide a reference title")
-
+        title = self.__query_title()
         authors = self.__query_authors()
         year = self.__query_year()
         publisher = self.io.read_non_empty("Enter publisher: ",
@@ -37,6 +36,14 @@ class Add:
             self.io.write("\nReference added.")
         except:
             sys.exit("\nA database error occurred. Failed to add reference.")
+
+    def __query_title(self):
+        title = self.io.read_non_empty("Enter reference title: ",
+            "Please provide a title")
+        while len(title) > 300:
+            self.io.write("Please provide a valid title (max length: 300 characters): ")
+            title = self.io.read_non_empty("Enter reference title: ",
+                "Please provide a title")
 
     def __query_authors(self):
         num_authors = self.io.read("Enter the number of authors: ")
@@ -60,7 +67,7 @@ class Add:
 
     def __query_year(self):
         year = self.io.read("Enter reference year: ")
-        while not year.isnumeric() or int(year) <= 0:
+        while not year.isnumeric() or int(year) <= 0 or int(year) > datetime.date.today().year:
             self.io.write("Please provide a valid year")
             year = self.io.read("Enter reference year: ")
 
