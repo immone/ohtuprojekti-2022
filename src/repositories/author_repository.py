@@ -6,11 +6,11 @@ class AuthorRepository:
         cursor = self.__connection.cursor()
         cursor.execute(
             """
-            SELECT 
-                * 
+            SELECT
+                *
             FROM
-                author 
-            WHERE 
+                author
+            WHERE
                 name = :name
             """,
             {"name": name}
@@ -26,7 +26,7 @@ class AuthorRepository:
         cursor.execute(
             """
             INSERT INTO
-                author (name) 
+                author (name)
                 VALUES (:name)
             """,
             {"name": author}
@@ -38,9 +38,9 @@ class AuthorRepository:
         cursor = self.__connection.cursor()
         cursor.execute(
             """
-            DELETE FROM 
-                author 
-            WHERE 
+            DELETE FROM
+                author
+            WHERE
                 author_id = :author_id
             """,
             {"author_id": author_id}

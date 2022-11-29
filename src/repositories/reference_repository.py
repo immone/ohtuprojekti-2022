@@ -19,11 +19,11 @@ class ReferenceRepository:
         cursor = self.__connection.cursor()
         cursor.execute(
             """
-            SELECT 
-                * 
-            FROM 
-                reference 
-            WHERE 
+            SELECT
+                *
+            FROM
+                reference
+            WHERE
                 reference_id = :reference_id
             """,
             {"reference_id": reference_id}
@@ -54,7 +54,7 @@ class ReferenceRepository:
         cursor.execute(
             """
             INSERT INTO
-                reference (reference_id, title, year, publisher) 
+                reference (reference_id, title, year, publisher)
                 VALUES (:reference_id, :title, :year, :publisher)
             """,
             reference.to_dict()

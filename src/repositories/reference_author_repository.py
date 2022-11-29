@@ -7,12 +7,12 @@ class ReferenceAuthorRepository:
         cursor = self.__connection.cursor()
         cursor.execute(
             """
-            SELECT 
-                * 
-            FROM 
-                reference_author ra LEFT JOIN 
+            SELECT
+                *
+            FROM
+                reference_author ra LEFT JOIN
                 author a ON ra.author_id = a.author_id
-            WHERE 
+            WHERE
                 reference_id = :reference_id
             """,
             {"reference_id": reference_id}
@@ -27,7 +27,7 @@ class ReferenceAuthorRepository:
             cursor.execute(
                 """
                 INSERT INTO
-                    reference_author (reference_id, author_id) 
+                    reference_author (reference_id, author_id)
                     VALUES (:reference_id, :author_id)
                 """,
                 {"reference_id": reference.reference_id,
@@ -39,9 +39,9 @@ class ReferenceAuthorRepository:
         cursor = self.__connection.cursor()
         cursor.execute(
             """
-            DELETE FROM 
-                reference_author 
-            WHERE 
+            DELETE FROM
+                reference_author
+            WHERE
                 reference_id = :reference_id
             """,
             {"reference_id": reference_id}
