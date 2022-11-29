@@ -1,5 +1,7 @@
 # ohtuprojekti-2022
 
+![GHA workflow badge](https://github.com/immone/ohtuprojekti-2022/workflows/CI/badge.svg)
+
 ## [backlog](https://docs.google.com/spreadsheets/d/13fcNW8mODk9S0eXHV7xJ2yGnfn2_VSg37PK0HU-53MI/edit#gid=0)
 
 # Definition of Done
