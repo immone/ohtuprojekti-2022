@@ -1,32 +1,48 @@
-from database_connection import get_database_connection
-
-
 class AuthorRepository:
-    def __init__(self):
-        self.connection = get_database_connection()
+    def __init__(self, connection) -> None:
+        self.__connection = connection
 
-    def get(self, name: str):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM author WHERE name = :name",
-                       {"name": name})
-        author = cursor.fetchone()
-        return author["author_id"] if author is not None else None
-
-    def post(self, author: str):
-        cursor = self.connection.cursor()
+    def get(self, name: str) -> int:
+        cursor = self.__connection.cursor()
         cursor.execute(
             """
-                INSERT INTO
-                    author (name) 
-                    VALUES (:name)
-                """,
+            SELECT 
+                * 
+            FROM
+                author 
+            WHERE 
+                name = :name
+            """,
+            {"name": name}
+        )
+        author = cursor.fetchone()
+        return author["author_id"] if author else None
+
+    def post(self, author: str) -> int:
+        cursor = self.__connection.cursor()
+        author_id = self.get(author)
+        if author_id:
+            return author_id
+        cursor.execute(
+            """
+            INSERT INTO
+                author (name) 
+                VALUES (:name)
+            """,
             {"name": author}
         )
-        self.connection.commit()
+        self.__connection.commit()
         return cursor.lastrowid
 
-    def delete(self, author_id: int):
-        cursor = self.connection.cursor()
-        cursor.execute("DELETE FROM author WHERE author_id = :author_id",
-                       {"author_id": author_id})
-        self.connection.commit()
+    def delete(self, author_id: int) -> None:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            """
+            DELETE FROM 
+                author 
+            WHERE 
+                author_id = :author_id
+            """,
+            {"author_id": author_id}
+        )
+        self.__connection.commit()
