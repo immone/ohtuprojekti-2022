@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from commands.add import Add
 from entities.reference import Reference
 
+
 class TestAdd(unittest.TestCase):
     def setUp(self):
         self.repository_mock = Mock()
@@ -14,30 +15,30 @@ class TestAdd(unittest.TestCase):
         self.io_mock.read.side_effect = [
             "refid",
             "title",
-            "1", # number of authors
+            "1",  # number of authors
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called()
 
     def test_post_method_of_repository_is_called_with_correct_arguments(self):
         self.io_mock.read.side_effect = [
             "refid",
             "title",
-            "1", # number of authors
+            "1",  # number of authors
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -50,17 +51,17 @@ class TestAdd(unittest.TestCase):
         self.io_mock.read.side_effect = [
             "refid",
             "title",
-            "3", # number of authors
+            "3",  # number of authors
             "author1",
             "author2",
             "author3",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author1", "author2", "author3"],
@@ -68,23 +69,23 @@ class TestAdd(unittest.TestCase):
             year=2022,
             publisher="publisher"
         ))
-    
+
     def test_if_id_is_taken_new_id_is_queried(self):
         self.repository_mock.id_exists.side_effect = [True, False]
-        
+
         self.io_mock.read.side_effect = [
             "refid1",
             "refid2",
             "title",
-            "1", # number of authors
+            "1",  # number of authors
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid2",
             authors=["author"],
@@ -98,15 +99,15 @@ class TestAdd(unittest.TestCase):
             "refid",
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec p",
             "short title",
-            "1", # number of authors
+            "1",  # number of authors
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -123,12 +124,12 @@ class TestAdd(unittest.TestCase):
             "1",
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -145,12 +146,12 @@ class TestAdd(unittest.TestCase):
             "1",
             "author",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -158,7 +159,6 @@ class TestAdd(unittest.TestCase):
             year=2022,
             publisher="publisher"
         ))
-
 
     def test_if_year_is_nonnumeric_new_year_is_queried(self):
         self.io_mock.read.side_effect = [
@@ -168,12 +168,12 @@ class TestAdd(unittest.TestCase):
             "author",
             "not a number",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -190,12 +190,12 @@ class TestAdd(unittest.TestCase):
             "author",
             "-1",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],
@@ -212,12 +212,12 @@ class TestAdd(unittest.TestCase):
             "author",
             "999999999999",
             "2022",
-            "publisher" 
+            "publisher"
         ]
 
         add = Add(self.repository_mock, self.io_mock)
         add.run()
-    
+
         self.repository_mock.post.assert_called_with(Reference(
             reference_id="refid",
             authors=["author"],

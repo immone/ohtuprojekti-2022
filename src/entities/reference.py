@@ -14,27 +14,27 @@ class Reference:
             return other.to_dict() == self.to_dict()
         else:
             return False
-        
+
     @property
     def reference_id(self):
         return self.__reference_id
-    
+
     @property
     def authors(self):
         return self.__authors
-    
+
     @property
     def title(self):
         return self.__title
-    
+
     @property
     def year(self):
         return self.__year
-    
+
     @property
     def publisher(self):
         return self.__publisher
-    
+
     def to_dict(self):
         return {
             "reference_id": self.reference_id,

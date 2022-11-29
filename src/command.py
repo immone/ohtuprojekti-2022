@@ -11,7 +11,7 @@ class Command:
 
         return query
 
-    ## TODO: does it make sense to delete based on the reference id?
+    # TODO: does it make sense to delete based on the reference id?
     def delete(self):
         print("Attempting to remove a reference..")
 
@@ -21,7 +21,8 @@ class Command:
             self.repository.delete(id_to_remove)
             print("\nReference deleted.")
         except:
-            sys.exit("\nAn error occurred while trying to delete reference. Exiting..")
+            sys.exit(
+                "\nAn error occurred while trying to delete reference. Exiting..")
 
     def __check_id_exists(self):
         reference_id = self.__query_non_empty("Enter reference ID: ",
@@ -33,8 +34,8 @@ class Command:
                                                   "Please provide a reference ID")
         return reference_id
 
+    # TODO: which information is printed? in which format?
 
-    ## TODO: which information is printed? in which format?
     def list(self):
         print("Printing all references in the database..")
 
@@ -48,7 +49,7 @@ class Command:
                 print("Published in: ", ref.__year)
                 print("Published by: ", ref.__publisher, "\n")
 
-    ## TODO: does it make sense to edit based on the reference id?
+    # TODO: does it make sense to edit based on the reference id?
     def edit(self):
         print("Attempting to edit a reference..")
 
@@ -56,7 +57,7 @@ class Command:
 
         ref_object = self.__get_reference_object(id_to_edit)
 
-        ## feel free to refactor to Python 3.10 match case or something alike
+        # feel free to refactor to Python 3.10 match case or something alike
         field = self.__match_edit_field()
         if field == "author" or "authors":
             ref_object.__authors = field
@@ -86,15 +87,11 @@ class Command:
 
         return field
 
-
     # returns None if doesn't exist in db; call __check_id_exists prior
+
     def __get_reference_object(self, id):
         all_refs = self.repository.get_all()
         for ref in all_refs:
-            if ref.__reference_id == id: return ref
+            if ref.__reference_id == id:
+                return ref
         return None
-
-
-
-
-

@@ -1,15 +1,15 @@
 import sys
 
+
 class Translator:
-    
+
     def __init__(self, repository, io):
         self.repository = repository
         self.io = io
 
-
     def run(self):
         reference_id = self.__query_saved_reference_id()
-            if reference_id = "A":
+           if reference_id = "A":
                 self.__print_all()
             else:
 
@@ -24,20 +24,21 @@ class Translator:
             authors = ""
             for i in range(0, len(ref.authors)):
                 if i == len(ref.authors)-1:
-                    authors += (" "+ ref.authors[i])
+                    authors += (" " + ref.authors[i])
                 elif i == 0:
-                    authors += (ref.authors[i] +",")
-                else: 
+                    authors += (ref.authors[i] + ",")
+                else:
                     authors += (" " + ref.authors[i] + ",")
-            self.__print_ref(ref,authors)
+            self.__print_ref(ref, authors)
 
-    def __print_ref(self,ref,authors):
-            self.io.write("@book{"+ ref.reference_id +",")
-            self.io.write("  author    = {"+ authors +"}, ")
-            self.io.write("  title     = {"+ ref.title +"},")
-            self.io.write("  year      = {"+ str(ref.year) +"},")
-            self.io.write("  publisher = {"+ ref.publisher +"},")
-            self.io.write("}")
+    def __print_ref(self, ref,authors):
+        self.io.write("@book{" + ref.reference_id + ",")
+        self.io.write("  author    = {" + authors + "}, ")
+        self.io.write("  title     = {" + ref.title + "},")
+        self.io.write("  year      = {" + str(ref.year) + "},")
+        self.io.write("  publisher = {" + ref.publisher + "},")
+        self.io.write("}")
+
     def __query_saved_reference_id(self):
         while True:
             reference_id = self.io.read("Enter reference ID or <A> to print all references: ",
@@ -46,7 +47,7 @@ class Translator:
             if self.repository.id_exists(reference_id):
                 break
             elif reference_id == "A"
-                break
+               break
             else:
                 self.io.write("ID not in the database")
 

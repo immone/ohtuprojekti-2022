@@ -16,7 +16,7 @@ class Add:
         authors = self.__query_authors()
         year = self.__query_year()
         publisher = self.io.read("Enter publisher: ",
-            "Please provide a publisher")
+                                 "Please provide a publisher")
 
         try:
             self.repository.post(Reference(
@@ -33,7 +33,7 @@ class Add:
     def __query_reference_id(self):
         while True:
             reference_id = self.io.read("Enter reference ID: ",
-                "Please provide a reference ID")
+                                        "Please provide a reference ID")
 
             if not self.repository.id_exists(reference_id):
                 break
@@ -45,19 +45,20 @@ class Add:
     def __query_title(self):
         while True:
             title = self.io.read("Enter reference title: ",
-                "Please provide a title")
+                                 "Please provide a title")
 
             if len(title) <= 300:
                 break
             else:
-                self.io.write("Please provide a valid title (max length: 300 characters)")
+                self.io.write(
+                    "Please provide a valid title (max length: 300 characters)")
 
         return title
 
     def __query_authors(self):
         while True:
             num_authors = self.io.read("Enter the number of authors: ",
-                "Please provide a number")
+                                       "Please provide a number")
 
             if num_authors.isnumeric() and int(num_authors) > 0:
                 break
@@ -67,7 +68,7 @@ class Add:
         authors = []
         for i in range(0, int(num_authors)):
             author = self.io.read(f"Enter author {i + 1}: ",
-                "Please provide an author")
+                                  "Please provide an author")
 
             # if author is given in format lastname, firstname, parse that
             if ", " in author:
@@ -80,7 +81,8 @@ class Add:
 
     def __query_year(self):
         while True:
-            year = self.io.read("Enter reference year: ", "Please provide a year")
+            year = self.io.read("Enter reference year: ",
+                                "Please provide a year")
             if year.isnumeric() and int(year) > 0 and int(year) <= datetime.date.today().year:
                 break
             else:

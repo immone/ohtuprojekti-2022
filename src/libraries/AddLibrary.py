@@ -1,10 +1,9 @@
+from entities.reference import Reference
+from commands.add import Add
 from unittest.mock import Mock
 
 import sys
 sys.path.append(sys.path[0] + "/..")
-
-from commands.add import Add
-from entities.reference import Reference
 
 
 class AddLibrary:
@@ -27,7 +26,8 @@ class AddLibrary:
         output = io_mock.write.call_args_list[-1].args[0]
 
         if expected not in output:
-            raise AssertionError(f"{expected} was not in command output {output}")
+            raise AssertionError(
+                f"{expected} was not in command output {output}")
 
     def reference_should_be_saved_with_provided_fields(self):
         repository_mock = Mock()
@@ -44,6 +44,5 @@ class AddLibrary:
             title=self.inputs[1],
             authors=[self.inputs[3]],
             year=int(self.inputs[4]),
-            publisher=self.inputs[5] 
+            publisher=self.inputs[5]
         ))
-
