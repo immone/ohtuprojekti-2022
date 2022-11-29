@@ -38,9 +38,6 @@ jobs:
       - name: run pytest
         run: poetry run pytest
         
-      - name: run pylint
-        run: poetry run pylint src
-        
       - name: coverage report
         run: poetry run coverage xml
         
