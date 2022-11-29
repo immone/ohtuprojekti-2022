@@ -11,18 +11,18 @@ class Add:
     def run(self):
         self.io.write("Adding new reference...")
 
-        reference_id = self.io.read_non_empty("Enter reference ID: ",
+        reference_id = self.io.read("Enter reference ID: ",
             "Please provide a reference ID")
 
         while self.repository.id_exists(reference_id):
             self.io.write("That ID is already taken")
-            reference_id = self.io.read_non_empty("Enter reference ID: ",
+            reference_id = self.io.read("Enter reference ID: ",
                 "Please provide a reference ID")
 
         title = self.__query_title()
         authors = self.__query_authors()
         year = self.__query_year()
-        publisher = self.io.read_non_empty("Enter publisher: ",
+        publisher = self.io.read("Enter publisher: ",
             "Please provide a publisher")
 
         try:
@@ -38,22 +38,26 @@ class Add:
             sys.exit("\nA database error occurred. Failed to add reference.")
 
     def __query_title(self):
-        title = self.io.read_non_empty("Enter reference title: ",
+        title = self.io.read("Enter reference title: ",
             "Please provide a title")
         while len(title) > 300:
             self.io.write("Please provide a valid title (max length: 300 characters): ")
-            title = self.io.read_non_empty("Enter reference title: ",
+            title = self.io.read("Enter reference title: ",
                 "Please provide a title")
 
+        return title
+
     def __query_authors(self):
-        num_authors = self.io.read("Enter the number of authors: ")
+        num_authors = self.io.read("Enter the number of authors: ",
+            "Please provide a number")
         while not num_authors.isnumeric() or int(num_authors) == 0:
             self.io.write("Please provide a valid number")
-            num_authors = self.io.read("Enter the number of authors: ")
+            num_authors = self.io.read("Enter the number of authors: ",
+                "Please provide a number")
 
         authors = []
         for i in range(0, int(num_authors)):
-            author = self.io.read_non_empty(f"Enter author {i + 1}: ",
+            author = self.io.read(f"Enter author {i + 1}: ",
                 "Please provide an author")
 
             # if author is given in format lastname, firstname, parse that
@@ -66,9 +70,10 @@ class Add:
         return authors
 
     def __query_year(self):
-        year = self.io.read("Enter reference year: ")
+        year = self.io.read("Enter reference year: ", "Please provide a year")
         while not year.isnumeric() or int(year) <= 0 or int(year) > datetime.date.today().year:
             self.io.write("Please provide a valid year")
-            year = self.io.read("Enter reference year: ")
+            year = self.io.read("Enter reference year: ",
+                "Please provide a year")
 
         return int(year)
