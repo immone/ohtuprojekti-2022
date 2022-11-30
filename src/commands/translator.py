@@ -17,7 +17,7 @@ class Translator:
         try:
             reference_list = self.repository.get_all()
         except:
-            sys.exit("\n A database error occurred. Failde to load references.")
+            sys.exit("\n A database error occurred. Failed to load references.")
 
         for ref in reference_list:
             authors = ""
