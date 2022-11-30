@@ -15,18 +15,18 @@ class Edit():
         field = self.__match_edit_field()
         if field == "author" or "authors":
             ref_object.__authors = field
-            print("Author field changed successfully")
+            self.io.write("Author field changed successfully")
         elif field == "title":
             ref_object.__title = field
-            print("Title field changed successfully")
+            self.io.write("Title field changed successfully")
         elif field == "year":
             ref_object.__year = field
-            print("Year field changed successfully")
+            self.io.write("Year field changed successfully")
         elif field == "publisher":
             ref_object.__year = field
-            print("Publisher field changed successfully")
+            self.io.write("Publisher field changed successfully")
         else:
-            print("No such field exists")
+            self.io.write("No such field exists")
 
     def __match_edit_field(self):
         field = self.io.read("Which field of the given reference "
@@ -34,7 +34,7 @@ class Edit():
                                        "Please provide a field").strip().lower()
 
         while field not in ["author", "title", "year", "publisher"]:
-            print("Please give one of the listed fields")
+            self.io.write("Please give one of the listed fields")
             field = self.io.read("Which field of the given reference "
                                            "would you like to edit? (author, title, year, publisher)?",
                                            "Please provide a field").strip().lower()
@@ -56,7 +56,7 @@ class Edit():
                                               "Please provide a reference ID")
         # loop till given id exists in db
         while self.repository.id_exists(reference_id) == False:
-            print("No such reference ID exists")
+            self.io.write("No such reference ID exists")
             reference_id = self.io.read("Enter reference ID: ",
                                                   "Please provide a reference ID")
         return reference_id
