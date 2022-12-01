@@ -1,5 +1,6 @@
 import sys
 import datetime
+import unicodedata
 from entities.reference import Reference
 
 
@@ -11,12 +12,13 @@ class Add:
     def run(self):
         self.io.write("Adding new reference...")
 
-        reference_id = self.__query_reference_id()
         title = self.__query_title()
         authors = self.__query_authors()
         year = self.__query_year()
         publisher = self.io.read("Enter publisher: ",
                                  "Please provide a publisher")
+
+        reference_id = self.__generate_ref_id(authors, year)
 
         try:
             self.repository.post(Reference(
@@ -26,7 +28,7 @@ class Add:
                 year=year,
                 publisher=publisher
             ))
-            self.io.write("\nReference added.")
+            self.io.write(f"\nReference added with id '{reference_id}'.")
         except:
             sys.exit("\nA database error occurred. Failed to add reference.")
 
@@ -89,3 +91,20 @@ class Add:
                 self.io.write("Please provide a valid year")
 
         return int(year)
+
+    def __generate_ref_id(self, authors, year):
+        iteration = 0
+        while True:
+            author_lastname = authors[0].split()[1]
+            ref_id = author_lastname[:10] + str(year) + ("_" + str(iteration) if iteration > 0 else "")
+            ref_id = self.__normalize_str(ref_id)
+
+            if not self.repository.id_exists(ref_id):
+                return ref_id
+
+            iteration += 1
+
+    # from https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-normalize-in-a-python-unicode-string
+    def __normalize_str(self, s):
+        return ''.join(c for c in unicodedata.normalize('NFD', s)
+                    if unicodedata.category(c) != 'Mn')
