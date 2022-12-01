@@ -90,7 +90,8 @@ class Add:
     def __generate_ref_id(self, authors, year):
         iteration = 0
         while True:
-            author_lastname = authors[0].split()[1]
+            author = authors[0].split()
+            author_lastname = author[1] if len(author) > 1 else author[0]
             ref_id = author_lastname[:10] + str(year) + ("_" + str(iteration) if iteration > 0 else "")
             ref_id = self.__normalize_str(ref_id)
 
