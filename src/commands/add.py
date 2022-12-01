@@ -38,11 +38,9 @@ class Add:
                                         "Please provide a reference ID")
 
             if not self.repository.id_exists(reference_id):
-                break
-            else:
-                self.io.write("That ID is already taken")
+                return reference_id
 
-        return reference_id
+            self.io.write("That ID is already taken")
 
     def __query_title(self):
         while True:
@@ -50,12 +48,10 @@ class Add:
                                  "Please provide a title")
 
             if len(title) <= 300:
-                break
-            else:
-                self.io.write(
-                    "Please provide a valid title (max length: 300 characters)")
+                return title
 
-        return title
+            self.io.write(
+                "Please provide a valid title (max length: 300 characters)")
 
     def __query_authors(self):
         while True:
@@ -85,12 +81,11 @@ class Add:
         while True:
             year = self.io.read("Enter reference year: ",
                                 "Please provide a year")
-            if year.isnumeric() and int(year) > 0 and int(year) <= datetime.date.today().year:
-                break
-            else:
-                self.io.write("Please provide a valid year")
 
-        return int(year)
+            if year.isnumeric() and int(year) > 0 and int(year) <= datetime.date.today().year:
+                return int(year)
+
+            self.io.write("Please provide a valid year")
 
     def __generate_ref_id(self, authors, year):
         iteration = 0
