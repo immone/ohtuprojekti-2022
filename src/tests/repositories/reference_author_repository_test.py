@@ -82,3 +82,9 @@ class ReferenceAuthorRepositoryTest(unittest.TestCase):
         reference_authors = self.reference_author_repository.get(
             self.mock_reference.reference_id)
         self.assertEqual(self.mock_reference.authors, reference_authors)
+
+    def test_delete_reference_deletes_author(self):
+        self.reference_author_repository.delete(
+            self.mock_reference.reference_id)
+        self.assertIsNone(self.author_repository.get("Test Author 1"))
+        self.assertIsNone(self.author_repository.get("Test Author 2"))

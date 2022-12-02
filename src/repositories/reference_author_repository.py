@@ -51,3 +51,4 @@ class ReferenceAuthorRepository:
             {"reference_id": reference_id}
         )
         self.__connection.commit()
+        self.__author_repository._cleanup()

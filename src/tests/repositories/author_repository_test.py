@@ -32,3 +32,7 @@ class AuthorRepositoryTest(unittest.TestCase):
     def test_delete(self):
         self.author_repository.delete(self.author_id)
         self.assertIsNone(self.author_repository.get("Test Author"))
+
+    def test_delete_non_existent_author(self):
+        self.author_repository.delete(999)
+        self.assertEqual(1, self.author_repository.get("Test Author"))
