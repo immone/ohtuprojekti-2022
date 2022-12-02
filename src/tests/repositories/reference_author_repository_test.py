@@ -53,6 +53,23 @@ class ReferenceAuthorRepositoryTest(unittest.TestCase):
         with self.assertRaises(Exception):
             self.reference_author_repository.post(self.mock_reference)
 
+    def test_put_reference(self):
+        mock_reference = Reference(
+            reference_id="2",
+            authors=["Test Author 1", "Test Author 2"],
+            title="Test Title",
+            year="2020",
+            publisher="Test Publisher"
+        )
+        self.reference_author_repository.post(mock_reference)
+        mock_reference._Reference__authors = ["Test Author 1", "Test Author 3"]
+        self.reference_author_repository.put(mock_reference)
+        reference_authors = self.reference_author_repository.get(
+            mock_reference.reference_id)
+        self.assertEqual(mock_reference.authors, reference_authors)
+        self.assertEqual(1, self.author_repository.get("Test Author 1"))
+        self.assertEqual(3, self.author_repository.get("Test Author 3"))
+
     def test_delete(self):
         self.reference_author_repository.delete(
             self.mock_reference.reference_id)

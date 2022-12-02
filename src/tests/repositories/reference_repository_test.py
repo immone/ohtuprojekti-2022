@@ -44,6 +44,19 @@ class ReferenceRepositoryTest(unittest.TestCase):
         with self.assertRaises(Exception):
             self.reference_repository.post(self.mock_reference)
 
+    def test_put(self) -> None:
+        self.reference_repository.put(self.mock_reference)
+        references = self.reference_repository.get_all()
+        self.assertEqual(len(references), 1)
+        self.assertEqual(references[0].to_dict(),
+                         self.mock_reference.to_dict())
+
+    def test_put_non_existing(self) -> None:
+        self.reference_repository.delete("1")
+        # should remain empty
+        self.reference_repository.put(self.mock_reference)
+        self.assertEqual(self.reference_repository.get_all(), [])
+
     def test_delete(self) -> None:
         self.reference_repository.delete("1")
         self.assertEqual(self.reference_repository.get_all(), [])

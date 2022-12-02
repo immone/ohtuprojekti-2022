@@ -35,6 +35,10 @@ class ReferenceAuthorRepository:
             )
         self.__connection.commit()
 
+    def put(self, reference: object) -> None:
+        self.delete(reference.reference_id)
+        self.post(reference)
+
     def delete(self, reference_id: object) -> None:
         cursor = self.__connection.cursor()
         cursor.execute(

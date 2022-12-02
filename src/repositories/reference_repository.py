@@ -61,6 +61,24 @@ class ReferenceRepository:
         )
         self.__connection.commit()
 
+    def put(self, reference: Reference) -> None:
+        self.__reference_author_repository.put(reference)
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            """
+            UPDATE
+                reference
+            SET
+                title = :title,
+                year = :year,
+                publisher = :publisher
+            WHERE
+                reference_id = :reference_id
+            """,
+            reference.to_dict()
+        )
+        self.__connection.commit()
+
     def delete(self, reference_id: str) -> None:
         cursor = self.__connection.cursor()
         cursor.execute("DELETE FROM reference WHERE reference_id = :reference_id",
