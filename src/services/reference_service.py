@@ -1,4 +1,4 @@
-from repositories import AuthorRepository, ReferenceAuthorRepository, ReferenceRepository
+from repositories import AuthorRepository, ReferenceAuthorRepository, ReferenceRepository, TagRepository, ReferenceTagRepository
 from entities import Reference
 from database_connection import get_database_connection
 
@@ -10,6 +10,9 @@ class ReferenceService:
         self.__author_repository = AuthorRepository(self.__connection)
         self.__reference_author_repository = ReferenceAuthorRepository(
             self.__connection, self.__author_repository)
+        self.__tag_repository = TagRepository(self.__connection)
+        self.__reference_tag_repository = ReferenceTagRepository(
+            self.__connection, self.__tag_repository)
 
     def id_exists(self, reference_id: int) -> bool:
         return self.__reference_repository.id_exists(reference_id)
@@ -17,12 +20,14 @@ class ReferenceService:
     def get(self, reference_id: int) -> Reference:
         reference = self.__reference_repository.get(reference_id)
         authors = self.__reference_author_repository.get(reference_id)
+        tags = self.__reference_tag_repository.get(reference_id)
         return Reference(
             reference_id=reference["reference_id"],
             authors=authors,
             title=reference["title"],
             year=reference["year"],
-            publisher=reference["publisher"]
+            publisher=reference["publisher"],
+            tags=tags
         )
 
     def get_all(self) -> list:
@@ -31,16 +36,20 @@ class ReferenceService:
 
     def post(self, reference: Reference) -> None:
         self.__reference_author_repository.post(reference)
+        self.__reference_tag_repository.post(reference)
         self.__reference_repository.post(reference)
 
     def put(self, reference: Reference) -> None:
         self.__reference_author_repository.put(reference)
+        self.__reference_tag_repository.put(reference)
         self.__reference_repository.put(reference)
 
     def delete(self, reference_id: int) -> None:
         self.__reference_repository.delete(reference_id)
         self.__reference_author_repository.delete(reference_id)
+        self.__reference_tag_repository.delete(reference_id)
 
     def delete_all(self) -> None:
         self.__reference_repository.delete_all()
         self.__reference_author_repository.delete_all()
+        self.__reference_tag_repository.delete_all()

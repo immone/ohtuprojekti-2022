@@ -1,13 +1,13 @@
 import unittest
 from database_connection import get_database_connection
-from repositories.author_repository import AuthorRepository
-from repositories.reference_repository import ReferenceRepository
+from repositories import AuthorRepository, ReferenceRepository
 
 
 class AuthorRepositoryTest(unittest.TestCase):
     def setUp(self):
         self.connection = get_database_connection()
-        ReferenceRepository(self.connection).delete_all()
+        self.reference_repository = ReferenceRepository(self.connection)
+        self.reference_repository.delete_all()
         self.author_repository = AuthorRepository(self.connection)
         self.author_id = self.author_repository.post("Test Author")
 

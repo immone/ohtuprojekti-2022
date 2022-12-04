@@ -12,14 +12,16 @@ class ReferenceServiceTest(unittest.TestCase):
             authors=["test_author", "test_author_2"],
             title="Moomie",
             year=2020,
-            publisher="Dotterbolaget"
+            publisher="Dotterbolaget",
+            tags=["test_tag", "test_tag_2"]
         )
         self.fake_reference_2 = Reference(
             reference_id="2",
             authors=["test_author_2", "test_author_3"],
             title="Winnie the Pooh",
             year=1999,
-            publisher="Epic Games"
+            publisher="Epic Games",
+            tags=["test_tag_2", "test_tag_3"]
         )
 
     def test_id_exists(self):
@@ -49,7 +51,8 @@ class ReferenceServiceTest(unittest.TestCase):
             authors=["test_author_2", "test_author_3"],
             title="Winnie the Pooh",
             year=1999,
-            publisher="Epic Games"
+            publisher="Epic Games",
+            tags=["test_tag_66", "test_tag_99"]
         )
         self.service.put(fake_reference)
         self.assertEqual(fake_reference.to_dict(),

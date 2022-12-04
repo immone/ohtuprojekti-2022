@@ -1,6 +1,6 @@
 import unittest
 from database_connection import get_database_connection
-from repositories import ReferenceAuthorRepository, AuthorRepository, ReferenceRepository
+from repositories import ReferenceAuthorRepository, AuthorRepository
 from entities import Reference
 
 
