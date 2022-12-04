@@ -14,7 +14,7 @@ class TagRepositoryTest(unittest.TestCase):
 
     def test_get(self):
         self.assertEqual(1, self.__tag_repository.get("Test"))
-    
+
     def test_post(self):
         self.assertEqual(2, self.__tag_repository.post("Test2"))
         self.assertEqual(2, self.__tag_repository.get("Test2"))

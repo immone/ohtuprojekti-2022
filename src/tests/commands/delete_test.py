@@ -7,6 +7,7 @@ from commands.delete import Delete
 from entities.reference import Reference
 from database_connection import get_database_connection
 
+
 class TestDelete(unittest.TestCase):
     def setUp(self):
         self.connection = get_database_connection()
@@ -20,7 +21,6 @@ class TestDelete(unittest.TestCase):
         )
         self.repository_mock.post(self.mock_reference)
         self.io_mock = Mock()
-
 
     def test_delete_method_of_repository_called(self):
         self.io_mock.read.side_effect = ["id"]

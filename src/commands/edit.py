@@ -30,14 +30,14 @@ class Edit():
 
     def __match_edit_field(self):
         field = self.io.read("Which field of the given reference "
-                                       "would you like to edit? (author, title, year, publisher)?",
-                                       "Please provide a field").strip().lower()
+                             "would you like to edit? (author, title, year, publisher)?",
+                             "Please provide a field").strip().lower()
 
         while field not in ["author", "title", "year", "publisher"]:
             self.io.write("Please give one of the listed fields")
             field = self.io.read("Which field of the given reference "
-                                           "would you like to edit? (author, title, year, publisher)?",
-                                           "Please provide a field").strip().lower()
+                                 "would you like to edit? (author, title, year, publisher)?",
+                                 "Please provide a field").strip().lower()
 
         return field
 
@@ -53,10 +53,10 @@ class Edit():
     # can abstract somewhere
     def __check_id_exists(self):
         reference_id = self.io.read("Enter reference ID: ",
-                                              "Please provide a reference ID")
+                                    "Please provide a reference ID")
         # loop till given id exists in db
         while self.repository.id_exists(reference_id) == False:
             self.io.write("No such reference ID exists")
             reference_id = self.io.read("Enter reference ID: ",
-                                                  "Please provide a reference ID")
+                                        "Please provide a reference ID")
         return reference_id

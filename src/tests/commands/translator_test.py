@@ -4,6 +4,7 @@ from commands.translator import Translator
 from entities.reference import Reference
 from repositories.reference_repository import ReferenceRepository
 
+
 class TestTranslator(unittest.TestCase):
     def setUp(self):
         self.repository_mock = Mock()
@@ -13,7 +14,7 @@ class TestTranslator(unittest.TestCase):
             title="title",
             year=2022,
             publisher="publisher"
-            )]
+        )]
         self.io_mock = Mock()
 
     def test_tries_to_load_database(self):
@@ -23,7 +24,3 @@ class TestTranslator(unittest.TestCase):
         test_translator.run()
 
         self.repository_mock.get_all.assert_called()
-
-        
-
-

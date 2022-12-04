@@ -35,7 +35,7 @@ class Reference:
     @property
     def publisher(self):
         return self.__publisher
-    
+
     @property
     def tags(self):
         return self.__tags

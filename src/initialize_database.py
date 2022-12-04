@@ -33,7 +33,7 @@ def create_tables(connection):
     cursor = connection.cursor()
 
     cursor.execute(
-    """
+        """
     create table author (
         author_id integer not null,
         name text not null,
@@ -44,7 +44,7 @@ def create_tables(connection):
     )
 
     cursor.execute(
-    """
+        """
     create table tag (
         tag_id integer not null,
         name text not null,
@@ -55,7 +55,7 @@ def create_tables(connection):
     )
 
     cursor.execute(
-    """
+        """
     create table reference (
         reference_id text not null,
         title text not null,
@@ -67,7 +67,7 @@ def create_tables(connection):
     )
 
     cursor.execute(
-    """
+        """
     create table reference_author (
         reference_id text,
         author_id integer,
@@ -79,7 +79,7 @@ def create_tables(connection):
     )
 
     cursor.execute(
-    """
+        """
     create table reference_tag (
         reference_id text,
         tag_id integer,
@@ -89,7 +89,6 @@ def create_tables(connection):
     );
     """
     )
-
 
     connection.commit()
 

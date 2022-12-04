@@ -30,7 +30,7 @@ class Translator:
                     authors += (" " + ref.authors[i] + ",")
             self.__print_ref(ref, authors)
 
-    def __print_ref(self, ref,authors):
+    def __print_ref(self, ref, authors):
         self.io.write("@book{" + ref.reference_id + ",")
         self.io.write("  author    = {" + authors + "}, ")
         self.io.write("  title     = {" + ref.title + "},")
@@ -40,13 +40,14 @@ class Translator:
 
     def __query_saved_reference_id(self):
         while True:
-            reference_id = self.io.read("<A> to print all references: ","You need to input <A>")
+            reference_id = self.io.read(
+                "<A> to print all references: ", "You need to input <A>")
 
-            #if self.repository.id_exists(reference_id):
+            # if self.repository.id_exists(reference_id):
             #    break
             if reference_id == "A":
-               break
-            #else:
+                break
+            # else:
             #    self.io.write("ID not in the database")
 
         return reference_id

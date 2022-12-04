@@ -92,7 +92,8 @@ class Add:
         while True:
             author = authors[0].split()
             author_lastname = author[1] if len(author) > 1 else author[0]
-            ref_id = author_lastname[:10] + str(year) + ("_" + str(iteration) if iteration > 0 else "")
+            ref_id = author_lastname[:10] + \
+                str(year) + ("_" + str(iteration) if iteration > 0 else "")
             ref_id = self.__normalize_str(ref_id)
 
             if not self.repository.id_exists(ref_id):
@@ -103,4 +104,4 @@ class Add:
     # from https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-normalize-in-a-python-unicode-string
     def __normalize_str(self, s):
         return ''.join(c for c in unicodedata.normalize('NFD', s)
-                    if unicodedata.category(c) != 'Mn')
+                       if unicodedata.category(c) != 'Mn')

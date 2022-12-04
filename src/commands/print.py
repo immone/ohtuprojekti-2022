@@ -1,6 +1,7 @@
 import sys
 from entities.reference import Reference
 
+
 class Print():
     def __init__(self, repository, io):
         self.repository = repository
