@@ -47,7 +47,6 @@ class AuthorRepository:
         )
         self.__connection.commit()
 
-    # method to delete authors that are not referenced by any references
     def _cleanup(self) -> None:
         cursor = self.__connection.cursor()
         cursor.execute(

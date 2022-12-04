@@ -1,18 +1,16 @@
 import unittest
 from database_connection import get_database_connection
-from repositories.reference_author_repository import ReferenceAuthorRepository
-from repositories.author_repository import AuthorRepository
-from repositories.reference_repository import ReferenceRepository
-from entities.reference import Reference
+from repositories import ReferenceAuthorRepository, AuthorRepository, ReferenceRepository
+from entities import Reference
 
 
 class ReferenceAuthorRepositoryTest(unittest.TestCase):
     def setUp(self):
         self.connection = get_database_connection()
-        ReferenceRepository().delete_all()
         self.author_repository = AuthorRepository(self.connection)
         self.reference_author_repository = ReferenceAuthorRepository(
             self.connection, self.author_repository)
+        self.reference_author_repository.delete_all()
         self.mock_reference = Reference(
             reference_id="1",
             authors=["Test Author 1", "Test Author 2"],

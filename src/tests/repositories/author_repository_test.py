@@ -7,7 +7,7 @@ from repositories.reference_repository import ReferenceRepository
 class AuthorRepositoryTest(unittest.TestCase):
     def setUp(self):
         self.connection = get_database_connection()
-        ReferenceRepository().delete_all()
+        ReferenceRepository(self.connection).delete_all()
         self.author_repository = AuthorRepository(self.connection)
         self.author_id = self.author_repository.post("Test Author")
 

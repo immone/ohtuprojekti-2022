@@ -52,3 +52,8 @@ class ReferenceAuthorRepository:
         )
         self.__connection.commit()
         self.__author_repository._cleanup()
+
+    def delete_all(self) -> None:
+        cursor = self.__connection.cursor()
+        cursor.execute("DELETE FROM reference_author")
+        self.__author_repository._cleanup()

@@ -5,9 +5,11 @@ from commands.add import Add
 from io import StringIO
 from commands.delete import Delete
 from entities.reference import Reference
+from database_connection import get_database_connection
 
 class TestDelete(unittest.TestCase):
     def setUp(self):
+        self.connection = get_database_connection()
         self.repository_mock = Mock()
         self.mock_reference = Reference(
             reference_id="id",
@@ -27,7 +29,7 @@ class TestDelete(unittest.TestCase):
         self.repository_mock.delete.assert_called_with("id")
 
     def test_delete_when_id_doesnt_exist(self):
-        self.reference_repository = ReferenceRepository()
+        self.reference_repository = ReferenceRepository(self.connection)
         self.mock_reference = Reference(
             reference_id="id",
             authors=["author"],
@@ -41,7 +43,7 @@ class TestDelete(unittest.TestCase):
         self.assertRaises(StopIteration, delete.run)
 
     def test_when_exists(self):
-        self.reference_repository = ReferenceRepository()
+        self.reference_repository = ReferenceRepository(self.connection)
         self.mock_reference = Reference(
             reference_id="id",
             authors=["author"],
