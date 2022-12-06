@@ -3,19 +3,17 @@ import sys
 
 class Translator:
 
-    def __init__(self, repository, io):
-        self.repository = repository
+    def __init__(self, service, io):
+        self.service = service 
         self.io = io
 
     def run(self):
-        reference_id = self.__query_saved_reference_id()
-        if reference_id == "A":
-            self.__print_all()
+        self.__print_all()
 
     def __print_all(self):
         self.io.write("Trying to print all references...")
         try:
-            reference_list = self.repository.get_all()
+            reference_list = self.service.get_all()
         except:
             sys.exit("\n A database error occurred. Failed to load references.")
 
@@ -43,7 +41,7 @@ class Translator:
             reference_id = self.io.read(
                 "<A> to print all references: ", "You need to input <A>")
 
-            # if self.repository.id_exists(reference_id):
+            # if self.service.id_exists(reference_id):
             #    break
             if reference_id == "A":
                 break
