@@ -2,7 +2,6 @@ import unittest
 from unittest.mock import Mock
 from commands.translator import Translator
 from entities.reference import Reference
-from repositories.reference_repository import ReferenceRepository
 
 
 class TestTranslator(unittest.TestCase):

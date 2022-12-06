@@ -1,8 +1,6 @@
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 from repositories.reference_repository import ReferenceRepository
-from commands.add import Add
-from io import StringIO
 from commands.delete import Delete
 from entities.reference import Reference
 from database_connection import get_database_connection

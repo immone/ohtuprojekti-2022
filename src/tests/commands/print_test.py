@@ -1,10 +1,6 @@
 import unittest
-from unittest.mock import Mock, patch
-from repositories.reference_repository import ReferenceRepository
-from commands.add import Add
-from io import StringIO
+from unittest.mock import Mock
 from commands.print import Print
-from entities.reference import Reference
 
 
 class PrintTest(unittest.TestCase):

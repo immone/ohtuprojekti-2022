@@ -1,5 +1,4 @@
 import sys
-from entities.reference import Reference
 
 
 class Delete:
