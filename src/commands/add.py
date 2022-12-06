@@ -50,7 +50,7 @@ class Add:
         name_regex = "^[a-zA-Z][a-zA-Z'.-]*(?: [a-zA-Z'.-]+)*[a-zA-Z]$"
 
         while True:
-            authors = self.io.read(" ... enter authors (delimited by semicolons): ",
+            authors = self.io.read(" ... enter authors (delimited by semicolons) [format: FirstName(s) LastName]: ",
                                     " ...... please provide at least one author")
 
             authors = [a.strip() for a in authors.split(";")]
