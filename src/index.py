@@ -12,26 +12,28 @@ def main():
     if len(args) == 0:
         io = ConsoleIO()
         while True:
-            io.write("Give: ")
-            io.write("add -- To add new reference")
-            io.write("bibtex -- To print all references")
             command = io.read("Enter command: ", "Please provide a valid command")
             if command == "add":
                 add()
             if command == "bibtex":
                 bibtex()
-
+            if command == "help":
+                help(io)
     if args[0] == "add":
         add()
     if args[0] == "bibtex":
         bibtex()
+def help(io):
+    io.write("Give: ")
+    io.write("add -- To add new reference")
+    io.write("bibtex -- To print all references")
 
 def add():
-        add = Add(ReferenceSerice(),ConsoleIO())
-        add.run()
+    add = Add(ReferenceService(),ConsoleIO())
+    add.run()
 def bibtex():
-        translator = Translator(ReferenceService(), ConsoleIO())
-        translator.run()
+    translator = Translator(ReferenceService(), ConsoleIO())
+    translator.run()
 
 if __name__ == "__main__":
     main()
