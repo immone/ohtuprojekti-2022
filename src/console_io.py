@@ -7,5 +7,8 @@ class ConsoleIO:
 
         return query
 
+    def read_opt(self, prompt):
+        return input(prompt)
+
     def write(self, data):
         print(data)

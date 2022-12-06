@@ -17,6 +17,7 @@ class Add:
         year = self.__query_year()
         publisher = self.io.read("Enter publisher: ",
                                  "Please provide a publisher")
+        tags = self.__query_tags()
 
         reference_id = self.__generate_ref_id(authors, year)
 
@@ -26,7 +27,8 @@ class Add:
                 authors=authors,
                 title=title,
                 year=year,
-                publisher=publisher
+                publisher=publisher,
+                tags=tags
             ))
             self.io.write(f"\nReference added with id '{reference_id}'.")
         except:
@@ -84,3 +86,7 @@ class Add:
     def __normalize_str(self, s):
         return ''.join(c for c in unicodedata.normalize('NFD', s)
                        if unicodedata.category(c) != 'Mn')
+
+    def __query_tags(self):
+        tags = self.io.read_opt("Enter reference tags (delimited by semicolons): ")
+        return [t.strip() for t in tags.split(";")]
