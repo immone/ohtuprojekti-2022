@@ -7,7 +7,6 @@ from console_io import ConsoleIO
 from services.reference_service import ReferenceService
 
 def main():
-
     args = sys.argv[1:]
     if len(args) == 0:
         io = ConsoleIO()
@@ -18,25 +17,32 @@ def main():
             if command == "bibtex":
                 bibtex()
             if command == "help":
-                help(io)
+                list_commands(io)
             if command == "exit":
-                break
+                return
+
     if args[0] == "add":
         add()
-    if args[0] == "bibtex":
+    elif args[0] == "bibtex":
         bibtex()
-def help(io):
+
+
+def list_commands(io):
     io.write("Give: ")
     io.write("add -- To add new reference")
     io.write("bibtex -- To print all references")
     io.write("exit -- To stop program")
 
+
 def add():
     add = Add(ReferenceService(),ConsoleIO())
     add.run()
+
+
 def bibtex():
     translator = Translator(ReferenceService(), ConsoleIO())
     translator.run()
+
 
 if __name__ == "__main__":
     main()
