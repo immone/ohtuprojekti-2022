@@ -18,4 +18,4 @@
   * Coherent coding style and project architecture
   * Use of conventional commits in GitHub
   
-  
+Tosi hyvää duunia, oikeastaan mitään refaktoroitavaa ei nopealla tarkastelulla löytynyt :D
