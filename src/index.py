@@ -1,42 +1,36 @@
 import sys
-from commands.add import Add
-from commands.translator import Translator
-from commands.search import Search
-from services.reference_service import ReferenceService
+from commands import Add, Help, Search, Translator
+from services import ReferenceService
 from console_io import ConsoleIO
 
 def main():
     args = sys.argv[1:]
+    menu_io = ConsoleIO()
     if len(args) == 0:
-        menu_io = ConsoleIO()
         while True:
+            menu_io.write(Help.get("file"))
             command = menu_io.read("Enter command: ", "Please provide a command")
             if command == "add":
                 add()
             elif command == "bibtex":
                 bibtex()
             elif command == "help":
-                list_commands(menu_io)
+                menu_io.write(Help.get("file"))
             elif command == "search":
                 search()
             elif command == "exit":
                 return
             else:
-                list_commands(menu_io)
+                menu_io.write(Help.get("file"))
 
     if args[0] == "add":
         add()
+    elif args[0] == "help":
+        menu_io.write(Help.get("console"))
     elif args[0] == "bibtex":
         bibtex()
     elif args[0] == "search":
         search()
-
-def list_commands(io):
-    io.write("Give: ")
-    io.write("add -- To add new reference")
-    io.write("bibtex -- To print all references")
-    io.write("exit -- To stop program")
-
 
 def add():
     add = Add(ReferenceService(), ConsoleIO())

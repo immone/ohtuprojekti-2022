@@ -22,13 +22,13 @@ poetry run invoke build
 ```
 
 # Usage
-- Add reference
-    ```bash
-    poetry run invoke add
+- Interactive mode
+    ´´´bash
+    poetry run invoke start
     ````
-- Get bibtex
+- Run command once with optional flag
     ```bash
-    poetry run invoke bibtex
+    poetry run invoke start -a[dd] -s[earch] -b[ibtex] -h[elp]
     ```
 
 ## Testing

@@ -2,16 +2,15 @@ from invoke import task
 
 
 @task
-def start(ctx):
-    ctx.run("python3 src/index.py", pty=True)
-
-@task
-def add(ctx):
-    ctx.run("python3 src/index.py add", pty=True)
-
-@task
-def bibtex(ctx):
-    ctx.run("python3 src/index.py bibtex", pty=True)
+def start(ctx, help=False, add=False, bibtex=False):
+    if help:
+        ctx.run("python3 src/index.py help", pty=True)
+    elif add:
+        ctx.run("python3 src/index.py add", pty=True)
+    elif bibtex:
+        ctx.run("python3 src/index.py bibtex", pty=True)
+    else:
+        ctx.run("python3 src/index.py", pty=True)
 
 @task
 def build(ctx):
