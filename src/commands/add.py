@@ -61,12 +61,6 @@ class Add:
 
             self.io.write(" ...... please provide valid author(s)")
 
-        for i in range(0, len(authors)):
-            # if author is given in format lastname, firstname, parse that
-            if ", " in authors[i]:
-                names = authors[i].split(", ")
-                authors[i] = f"{names[1]} {names[0]}"
-
         return authors
 
     def __query_year(self):
