@@ -20,7 +20,7 @@ class Add:
                                  " ...... please provide a publisher")
         tags = self.__query_tags()
 
-        reference_id = self.__generate_ref_id(authors, year)
+        reference_id = self.generate_ref_id(authors, year)
 
         try:
             self.service.post(Reference(
@@ -73,7 +73,8 @@ class Add:
 
             self.io.write(" ...... please provide a valid year")
 
-    def __generate_ref_id(self, authors, year):
+    # public so that AddLibrary can access it
+    def generate_ref_id(self, authors, year):
         iteration = 0
         while True:
             author_lastname = authors[0].split()[-1]
