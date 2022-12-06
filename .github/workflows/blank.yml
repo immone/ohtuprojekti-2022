@@ -33,7 +33,10 @@ jobs:
         run: pip install poetry
       
       - name: install dependencies
-        run: poetry install 
+        run: poetry install
+
+      - name: run pylint
+        run: poetry lint
         
       - name: run pytest
         run: poetry run pytest
