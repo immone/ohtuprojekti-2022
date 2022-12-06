@@ -2,6 +2,7 @@ import sys
 from commands.add import Add
 from commands.translator import Translator
 from repositories.reference_repository import ReferenceRepository
+from services.reference_service import ReferenceService
 from console_io import ConsoleIO
 
 
@@ -12,7 +13,7 @@ def main():
         return
 
     if args[0] == "add":
-        add = Add(ReferenceRepository(), ConsoleIO())
+        add = Add(ReferenceService(), ConsoleIO())
         add.run()
 
     if args[0] == "bibtex":

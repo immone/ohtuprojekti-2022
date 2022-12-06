@@ -5,8 +5,8 @@ from entities.reference import Reference
 
 
 class Add:
-    def __init__(self, repository, io):
-        self.repository = repository
+    def __init__(self, service, io):
+        self.service = service
         self.io = io
 
     def run(self):
@@ -21,7 +21,7 @@ class Add:
         reference_id = self.__generate_ref_id(authors, year)
 
         try:
-            self.repository.post(Reference(
+            self.service.post(Reference(
                 reference_id=reference_id,
                 authors=authors,
                 title=title,
@@ -31,16 +31,6 @@ class Add:
             self.io.write(f"\nReference added with id '{reference_id}'.")
         except:
             sys.exit("\nA database error occurred. Failed to add reference.")
-
-    def __query_reference_id(self):
-        while True:
-            reference_id = self.io.read("Enter reference ID: ",
-                                        "Please provide a reference ID")
-
-            if not self.repository.id_exists(reference_id):
-                return reference_id
-
-            self.io.write("That ID is already taken")
 
     def __query_title(self):
         while True:
@@ -96,7 +86,7 @@ class Add:
                 str(year) + ("_" + str(iteration) if iteration > 0 else "")
             ref_id = self.__normalize_str(ref_id)
 
-            if not self.repository.id_exists(ref_id):
+            if not self.service.id_exists(ref_id):
                 return ref_id
 
             iteration += 1
