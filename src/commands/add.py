@@ -44,26 +44,16 @@ class Add:
                 "Please provide a valid title (max length: 300 characters)")
 
     def __query_authors(self):
-        while True:
-            num_authors = self.io.read("Enter the number of authors: ",
-                                       "Please provide a number")
+        authors = self.io.read("Enter reference authors (delimited by semicolons): ",
+                                 "Please provide at least one author")
 
-            if num_authors.isnumeric() and int(num_authors) > 0:
-                break
-            else:
-                self.io.write("Please provide a valid number")
+        authors = [a.strip() for a in authors.split(";")]
 
-        authors = []
-        for i in range(0, int(num_authors)):
-            author = self.io.read(f"Enter author {i + 1}: ",
-                                  "Please provide an author")
-
+        for i in range(0, len(authors)):
             # if author is given in format lastname, firstname, parse that
-            if ", " in author:
-                names = author.split(", ")
-                author = f"{names[1]} {names[0]}"
-
-            authors.append(author)
+            if ", " in authors[i]:
+                names = authors[i].split(", ")
+                authors[i] = f"{names[1]} {names[0]}"
 
         return authors
 
@@ -80,8 +70,7 @@ class Add:
     def __generate_ref_id(self, authors, year):
         iteration = 0
         while True:
-            author = authors[0].split()
-            author_lastname = author[1] if len(author) > 1 else author[0]
+            author_lastname = authors[0].split()[-1]
             ref_id = author_lastname[:10] + \
                 str(year) + ("_" + str(iteration) if iteration > 0 else "")
             ref_id = self.__normalize_str(ref_id)
