@@ -95,8 +95,8 @@ class Add:
     # from https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-normalize-in-a-python-unicode-string
     def __normalize_str(self, s):
         return ''.join(c for c in unicodedata.normalize('NFD', s)
-                       if unicodedata.category(c) != 'Mn')
+                       if unicodedata.category(c) != 'Mn' and c.isalnum())
 
     def __query_tags(self):
-        tags = self.io.read_opt(" ... enter reference tags (delimited by semicolons) [optional]: ")
+        tags = self.io.read(" ... enter reference tags (delimited by semicolons) [optional]: ")
         return [t.strip() for t in tags.split(";")]
