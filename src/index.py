@@ -2,6 +2,7 @@ import sys
 from commands.add import Add
 from commands.translator import Translator
 from repositories.reference_repository import ReferenceRepository
+from services.reference_service import ReferenceService
 from console_io import ConsoleIO
 from services.reference_service import ReferenceService
 
