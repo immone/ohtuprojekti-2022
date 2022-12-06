@@ -28,7 +28,7 @@ class Translator:
                     authors += (" " + ref.authors[i] + ",")
             self.__print_ref(ref, authors)
 
-def __print_ref(self, ref, authors):
+    def __print_ref(self, ref, authors):
         self.command_io.write("@book{" + ref.reference_id + ",")
         self.command_io.write("  author    = {" + authors + "}, ")
         self.command_io.write("  title     = {" + ref.title + "},")

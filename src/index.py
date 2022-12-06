@@ -22,7 +22,7 @@ def main():
             elif command == "exit":
                 return
             else:
-                list_commands(io)
+                list_commands(menu_io)
 
     if args[0] == "add":
         add()
