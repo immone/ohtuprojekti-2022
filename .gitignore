@@ -11,3 +11,8 @@ __pycache__
 # data files
 data/database.sqlite
 data/test-database.sqlite
+
+# robot files
+log.html
+output.xml
+report.html

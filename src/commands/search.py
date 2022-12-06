@@ -21,9 +21,13 @@ class Search:
         all_refs = self.__service.get_all()
         results = []
         for ref in all_refs:
+            matches = 0
+            print(f"IN SEARCH REF_STR {str(ref)}")
             for term in terms:
                 ref_str = f"{str(ref)} {ref.reference_id}"
-                matches = ref_str.lower().count(term.lower())
+                print(f"    TERM {term}")
+                matches += ref_str.lower().count(term.lower())
+                print(f"    matches: {matches}")
         
             if matches > 0:
                 results.append({"ref": ref, "matches": matches})
