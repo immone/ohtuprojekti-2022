@@ -19,6 +19,8 @@ def main():
                 bibtex()
             if command == "help":
                 help(io)
+            if command == "exit":
+                break
     if args[0] == "add":
         add()
     if args[0] == "bibtex":
@@ -27,6 +29,7 @@ def help(io):
     io.write("Give: ")
     io.write("add -- To add new reference")
     io.write("bibtex -- To print all references")
+    io.write("exit -- To stop program")
 
 def add():
     add = Add(ReferenceService(),ConsoleIO())
