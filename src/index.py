@@ -4,20 +4,19 @@ from commands.translator import Translator
 from commands.search import Search
 from services.reference_service import ReferenceService
 from console_io import ConsoleIO
-from services.reference_service import ReferenceService
 
 def main():
     args = sys.argv[1:]
     if len(args) == 0:
-        io = ConsoleIO()
+        menu_io = ConsoleIO()
         while True:
-            command = io.read("Enter command: ", "Please provide a command")
+            command = menu_io.read("Enter command: ", "Please provide a command")
             if command == "add":
                 add()
             elif command == "bibtex":
                 bibtex()
             elif command == "help":
-                list_commands(io)
+                list_commands(menu_io)
             elif command == "search":
                 search()
             elif command == "exit":
