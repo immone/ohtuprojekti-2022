@@ -17,3 +17,5 @@
   * Clear naming scheme
   * Coherent coding style and project architecture
   * Use of conventional commits in GitHub
+  
+  
