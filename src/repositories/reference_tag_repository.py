@@ -1,7 +1,7 @@
-class ReferenceAuthorRepository:
-    def __init__(self, connection, author_repository) -> None:
+class ReferenceTagRepository:
+    def __init__(self, connection, tag_repository) -> None:
         self.__connection = connection
-        self.__author_repository = author_repository
+        self.__tag_repository = tag_repository
 
     def get(self, reference_id: object) -> list:
         cursor = self.__connection.cursor()
@@ -10,28 +10,28 @@ class ReferenceAuthorRepository:
             SELECT
                 *
             FROM
-                reference_author ra LEFT JOIN
-                author a ON ra.author_id = a.author_id
+                reference_tag rt LEFT JOIN
+                tag t ON rt.tag_id = t.tag_id
             WHERE
                 reference_id = :reference_id
             """,
             {"reference_id": reference_id}
         )
-        reference_authors = cursor.fetchall()
-        return [reference_author["name"] for reference_author in reference_authors] if reference_authors else []
+        reference_tags = cursor.fetchall()
+        return [reference_tag["name"] for reference_tag in reference_tags] if reference_tags else []
 
     def post(self, reference: object) -> None:
         cursor = self.__connection.cursor()
-        for author_name in reference.authors:
-            author_id = self.__author_repository.post(author_name)
+        for tag_name in reference.tags:
+            tag_id = self.__tag_repository.post(tag_name)
             cursor.execute(
                 """
                 INSERT INTO
-                    reference_author (reference_id, author_id)
-                    VALUES (:reference_id, :author_id)
+                    reference_tag (reference_id, tag_id)
+                    VALUES (:reference_id, :tag_id)
                 """,
                 {"reference_id": reference.reference_id,
-                 "author_id": author_id}
+                 "tag_id": tag_id}
             )
         self.__connection.commit()
 
@@ -44,16 +44,16 @@ class ReferenceAuthorRepository:
         cursor.execute(
             """
             DELETE FROM
-                reference_author
+                reference_tag
             WHERE
                 reference_id = :reference_id
             """,
             {"reference_id": reference_id}
         )
         self.__connection.commit()
-        self.__author_repository._cleanup()
+        self.__tag_repository._cleanup()
 
     def delete_all(self) -> None:
         cursor = self.__connection.cursor()
-        cursor.execute("DELETE FROM reference_author")
-        self.__author_repository._cleanup()
+        cursor.execute("DELETE FROM reference_tag")
+        self.__tag_repository._cleanup()

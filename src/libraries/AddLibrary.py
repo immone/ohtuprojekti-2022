@@ -1,9 +1,11 @@
-from entities.reference import Reference
-from commands.add import Add
 from unittest.mock import Mock
 
 import sys
 sys.path.append(sys.path[0] + "/..")
+
+
+from entities.reference import Reference
+from commands.add import Add
 
 
 class AddLibrary:
@@ -40,9 +42,10 @@ class AddLibrary:
         add.run()
 
         repository_mock.post.assert_called_with(Reference(
-            reference_id=self.inputs[0],
-            title=self.inputs[1],
-            authors=[self.inputs[3]],
-            year=int(self.inputs[4]),
-            publisher=self.inputs[5]
+            reference_id=add.generate_ref_id([self.inputs[1]], int(self.inputs[2])),
+            title=self.inputs[0],
+            authors=[self.inputs[1]],
+            year=int(self.inputs[2]),
+            publisher=self.inputs[3],
+            tags=[self.inputs[4]]
         ))

@@ -46,3 +46,20 @@ class AuthorRepository:
             {"author_id": author_id}
         )
         self.__connection.commit()
+
+    def _cleanup(self) -> None:
+        cursor = self.__connection.cursor()
+        cursor.execute(
+            """
+            DELETE FROM
+                author
+            WHERE
+                author_id NOT IN (
+                    SELECT
+                        author_id
+                    FROM
+                        reference_author
+                )
+            """
+        )
+        self.__connection.commit()

@@ -1,13 +1,13 @@
 import unittest
 from database_connection import get_database_connection
-from repositories.author_repository import AuthorRepository
-from repositories.reference_repository import ReferenceRepository
+from repositories import AuthorRepository, ReferenceRepository
 
 
 class AuthorRepositoryTest(unittest.TestCase):
     def setUp(self):
         self.connection = get_database_connection()
-        ReferenceRepository().delete_all()
+        self.reference_repository = ReferenceRepository(self.connection)
+        self.reference_repository.delete_all()
         self.author_repository = AuthorRepository(self.connection)
         self.author_id = self.author_repository.post("Test Author")
 
@@ -32,3 +32,7 @@ class AuthorRepositoryTest(unittest.TestCase):
     def test_delete(self):
         self.author_repository.delete(self.author_id)
         self.assertIsNone(self.author_repository.get("Test Author"))
+
+    def test_delete_non_existent_author(self):
+        self.author_repository.delete(999)
+        self.assertEqual(1, self.author_repository.get("Test Author"))
