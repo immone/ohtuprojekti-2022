@@ -36,7 +36,7 @@ class DeleteLibrary():
 
         self.repository_mock.post.side_effect = post
         self.repository_mock.delete.side_effect = delete
-        self.repository_mock.delete.id_exists = id_exists
+        self.repository_mock.id_exists.side_effect = id_exists
 
         try:
             delete = Delete(self.repository_mock, self.io_mock)
@@ -44,26 +44,31 @@ class DeleteLibrary():
         except StopIteration:
             return "Wrong parameters"
 
-        self.repository_mock.id_exists()
+        output = self.io_mock.write.call_args_list[-1].args[0]
+
+        if expected not in output:
+            raise AssertionError(
+                f"{expected} was not in command output {output}")
+
 
     def reference_should_be_deleted_correctly(self):
-        def post():
-            for e in self.inputs:
-                self.db_model.append(e)
+            def post():
+                for e in self.inputs:
+                    self.db_model.append(e)
 
-        def delete(input):
-            if input in self.db_model:
-                self.db_model.remove(input)
+            def delete(input):
+                if input in self.db_model:
+                    self.db_model.remove(input)
 
-        self.repository_mock.post.side_effect = post
-        self.repository_mock.delete.side_effect = delete
-        self.io_mock.read.side_effect = self.inputs
+            self.repository_mock.post.side_effect = post
+            self.repository_mock.delete.side_effect = delete
+            self.io_mock.read.side_effect = self.inputs
 
-        try:
-            edit = Delete(self.repository_mock, self.io_mock)
-            edit.run()
-        except StopIteration:
-            return "Wrong parameters"
+            try:
+                edit = Delete(self.repository_mock, self.io_mock)
+                edit.run()
+            except StopIteration:
+                return "Wrong parameters"
 
 
-        self.repository_mock.delete.assert_called_with(self.inputs[0])
+            self.repository_mock.delete.assert_called_with(self.inputs[0])

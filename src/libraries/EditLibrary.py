@@ -43,7 +43,6 @@ class EditLibrary:
             return "Wrong parameters"
 
         output = self.io_mock.write.call_args_list[-1].args[0]
-        print(output)
 
         if expected not in output:
             raise AssertionError(
