@@ -44,6 +44,7 @@ def bibtex():
 
 def search():
     search = Search(ReferenceService(), ConsoleIO())
+    search.run()
 
 
 if __name__ == "__main__":
