@@ -14,7 +14,7 @@ class List():
             self.io.write(f"Found a total number of {len(all_references)} references.\n")
             self.io.write("Printing all references in the database..\n")
             for ref in all_references:
-                self.io.write(f"Title: {ref.title}' \n"
+                self.io.write(f"Title: {ref.title} \n"
                               f"Author(s): {', '.join(ref.authors)} \n"
                               f"Published in: {ref.year} \n"
                               f"Published by: {ref.publisher} \n"
