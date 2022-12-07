@@ -54,3 +54,28 @@ class TestDelete(unittest.TestCase):
         delete.run()
         self.assertFalse(self.reference_repository.id_exists("id"))
         self.assertRaises(StopIteration, delete.run)
+
+    def test_multiple(self):
+        self.reference_repository = ReferenceRepository(self.connection)
+        self.mock_reference = Reference(
+            reference_id="id2",
+            authors=["author"],
+            title="field",
+            year=1234,
+            publisher="field"
+        )
+        self.mock_reference2 = Reference(
+            reference_id="id3",
+            authors=["author2"],
+            title="field2",
+            year=1234,
+            publisher="field2"
+        )
+        self.reference_repository.post(self.mock_reference)
+        self.reference_repository.post(self.mock_reference2)
+        self.io_mock.read.side_effect = ["id2"]
+        delete = Delete(self.reference_repository, self.io_mock)
+        delete.run()
+        self.assertFalse(self.reference_repository.id_exists("id2"))
+        self.assertTrue(self.reference_repository.id_exists("id3"))
+
