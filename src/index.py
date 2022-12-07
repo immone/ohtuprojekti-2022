@@ -7,8 +7,8 @@ def main():
     args = sys.argv[1:]
     menu_io = ConsoleIO()
     if len(args) == 0:
+        menu_io.write(Help.get("file"))
         while True:
-            menu_io.write(Help.get("file"))
             command = menu_io.read("Enter command: ", "Please provide a command")
             if command == "add":
                 add()

@@ -2,13 +2,15 @@ from invoke import task
 
 
 @task
-def start(ctx, help=False, add=False, bibtex=False):
+def start(ctx, help=False, add=False, bibtex=False, search=False):
     if help:
         ctx.run("python3 src/index.py help", pty=True)
     elif add:
         ctx.run("python3 src/index.py add", pty=True)
     elif bibtex:
         ctx.run("python3 src/index.py bibtex", pty=True)
+    elif search:
+        ctx.run("python3 src/index.py search", pty=True)
     else:
         ctx.run("python3 src/index.py", pty=True)
 
