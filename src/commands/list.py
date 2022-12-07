@@ -18,4 +18,5 @@ class List():
                               f"Author(s): {', '.join(ref.authors)} \n"
                               f"Published in: {ref.year} \n"
                               f"Published by: {ref.publisher} \n"
+                              f"Reference ID: {ref.reference_id} \n"
                               f"Tags: {', '.join(ref.tags)}\n")
