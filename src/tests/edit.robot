@@ -9,7 +9,7 @@ Nonexistent Id Should Not Work
     Input Text  Example Publisher
     Input Text  ExampleTag
 
-    Output Contains  Wrong parameters
+    Output Contains  No such reference ID exists
 
 Existent Id Should Work
     Input Text  Example Title
@@ -44,5 +44,5 @@ Book Reference Should Be Edited Correctly
     Input Text  Example Author
     Input Text  2022  # Year of publication
     Input Text  Example Publisher
-    
+
     Reference Should Edited Correctly

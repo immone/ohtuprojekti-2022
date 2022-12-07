@@ -43,15 +43,13 @@ class EditLibrary:
             return "Wrong parameters"
 
         output = self.io_mock.write.call_args_list[-1].args[0]
+        print(output)
 
         if expected not in output:
             raise AssertionError(
                 f"{expected} was not in command output {output}")
 
     def reference_should_edited_correctly(self):
-        repository_mock = Mock()
-        io_mock = Mock()
-        self.io_mock.read.side_effect = self.inputs
         def post():
             for e in self.inputs:
                 self.db_model.append(e)
@@ -61,8 +59,8 @@ class EditLibrary:
 
         self.repository_mock.post.side_effect = post
         self.repository_mock.put.side_effect = put
-        io_mock.read.side_effect = self.inputs
-        add = Add(repository_mock, io_mock)
+        self.io_mock.read.side_effect = self.inputs
+        add = Add(self.repository_mock, self.io_mock)
 
         try:
             edit = Edit(self.repository_mock, self.io_mock)
@@ -71,7 +69,7 @@ class EditLibrary:
             return "Wrong parameters"
 
 
-        repository_mock.put.assert_called_with(Reference(
+        self.repository_mock.put.assert_called_with(Reference(
             reference_id=add.generate_ref_id([self.inputs[1]], int(self.inputs[2])),
             title=self.inputs[0],
             authors=[self.inputs[1]],
