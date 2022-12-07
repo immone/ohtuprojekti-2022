@@ -28,7 +28,7 @@ poetry run invoke build
     ````
 - Run command once with optional flag
     ```bash
-    poetry run invoke start -a[dd] -s[earch] -b[ibtex] -h[elp]
+    poetry run invoke start -a[dd -d[elete] -e[dit] -l[ist] -s[earch] -b[ibtex] -h[elp]
     ```
 
 ## Testing
