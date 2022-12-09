@@ -6,43 +6,27 @@ from console_io import ConsoleIO
 def main():
     args = sys.argv[1:]
     menu_io = ConsoleIO()
+    command_handlers = {
+        "add": add,
+        "bibtex": bibtex,
+        "help": lambda: menu_io.write(Help.get("file")),
+        "search": search,
+        "edit": edit,
+        "list": list,
+        "delete": delete,
+        "exit": lambda: None,
+    }
     if len(args) == 0:
         menu_io.write(Help.get("file"))
         while True:
             command = menu_io.read("Enter command: ", "Please provide a command")
-            if command == "add":
-                add()
-            elif command == "bibtex":
-                bibtex()
-            elif command == "help":
-                menu_io.write(Help.get("file"))
-            elif command == "search":
-                search()
-            elif command == "edit":
-                edit()
-            elif command == "list":
-                list()
-            elif command == "delete":
-                delete()
-            elif command == "exit":
-                return
+            if command in command_handlers:
+                command_handlers[command]()
             else:
                 menu_io.write(Help.get("file"))
 
-    if args[0] == "add":
-        add()
-    elif args[0] == "help":
-        menu_io.write(Help.get("console"))
-    elif args[0] == "bibtex":
-        bibtex()
-    elif args[0] == "search":
-        search()
-    elif args[0] == "delete":
-        delete()
-    elif args[0] == "edit":
-        edit()
-    elif args[0] == "list":
-        list()
+    if args[0] in command_handlers:
+        command_handlers[args[0]]()
 
 def add():
     add = Add(ReferenceService(), ConsoleIO())
