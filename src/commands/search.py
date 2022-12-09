@@ -1,3 +1,6 @@
+from Levenshtein import distance
+
+
 class Search:
     def __init__(self, service, io):
         self.__service = service
@@ -22,12 +25,27 @@ class Search:
         results = []
         for ref in all_refs:
             matches = 0
-            for term in terms:
-                ref_str = f"{str(ref)} {ref.reference_id}"
-                matches += ref_str.lower().count(term.lower())
-        
-            if matches > 0:
-                results.append({"ref": ref, "matches": matches})
+            dist = 0
+            
+            fields = [
+                ref.reference_id,
+                ref.title,
+                str(ref.year),
+                ref.publisher
+            ] + ref.authors
 
-        results = sorted(results, key=lambda result: result["matches"], reverse=True)
+            for term in terms:
+                term = term.lower()
+                cutoff = round(len(term) / 3)
+                for field in fields:
+                    for s in field.split():
+                        d = distance(term, s.lower(), score_cutoff=cutoff)
+                        if d <= cutoff:
+                            matches += 1
+                            dist += d
+            
+            if matches > 0:
+                results.append({"ref": ref, "matches": matches, "dist": dist})
+
+        results = sorted(results, key=lambda result: (result["matches"], -result["dist"]), reverse=True)
         return list(map(lambda result: result["ref"], results))
