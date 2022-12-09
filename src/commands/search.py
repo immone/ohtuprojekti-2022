@@ -22,12 +22,9 @@ class Search:
         results = []
         for ref in all_refs:
             matches = 0
-            print(f"IN SEARCH REF_STR {str(ref)}")
             for term in terms:
                 ref_str = f"{str(ref)} {ref.reference_id}"
-                print(f"    TERM {term}")
                 matches += ref_str.lower().count(term.lower())
-                print(f"    matches: {matches}")
         
             if matches > 0:
                 results.append({"ref": ref, "matches": matches})
