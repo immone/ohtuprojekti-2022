@@ -1,0 +1,6 @@
+{
+    "article": ["author", "title", "journal", "year", "volume", "number", "pages", "tag"],
+    "book": ["author", "title", "publisher", "year", "tag"],
+    "inproceedings": ["author", "title", "booktitle", "series", "year", "pages", "publisher", "address", "tag"],
+    "misc": ["author", "title", "howpublished", "year", "tag"]
+}
