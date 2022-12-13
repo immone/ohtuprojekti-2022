@@ -49,12 +49,21 @@ class ReferenceService:
             result["type"] = self.get_type(reference_id)
         return result
 
-
     def get_all(self) -> list:
         all_ref_ids = self.__reference_repository.get_all()
         if all_ref_ids:
             return [self.get(ref_id["reference_id"]) for ref_id in all_ref_ids]
         return []
+
+    def get_by_tag(self, tag) -> list:
+        all_refs = self.get_all()
+        tagged_refs = []
+        for ref in all_refs:
+            if "tag" in ref.keys():
+                if ref["tag"] == tag:
+                    tagged_refs.append(ref)
+
+        return tagged_refs
 
     def post(self, reference: dict) -> None:
         id = reference["reference_id"]

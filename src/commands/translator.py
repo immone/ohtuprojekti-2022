@@ -8,12 +8,17 @@ class Translator:
         self.command_io = io
 
     def run(self):
-        self.command_io.write("Trying to print all references...")
-        try:
-            reference_list = self.service.get_all()
-        except:
-            sys.exit("\n A database error occurred. Failed to load references.")
-        self.__print_all(reference_list)
+
+        user_term = self.__query_search_term()      
+        if user_term == "":
+            try:
+                reference_list = self.service.get_all()
+            except:
+                sys.exit("\n A database error occurred. Failed to load references.")
+
+            self.__print_all(reference_list)
+
+        if user_term[:2]
 
     def __print_all(self, references):
 
@@ -31,25 +36,16 @@ class Translator:
                 continue
             if type(ref[key]) is list:
                 self.command_io.write("  " + key + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
-            
             else:
                 self.command_io.write("  " + key + "    = {" + ref[key] + "}, " )
 
         self.command_io.write("}")
     
-    def __print_article(self, ref):
-        pass
 
-    def __query_saved_reference_id(self):
+    def __query_search_term(self):
         while True:
-            reference_id = self.command_io.read(
-                "<A> to print all references: ", "You need to input <A>")
-
-            # if self.service.id_exists(reference_id):
-            #    break
-            if reference_id == "A":
+            search_term = self.command_io.read("Give a search term or t-\'tag\' for what" + 
+                                               "you want to translate or <empty> to translate all references: ")
+            if search_term == "" or search_term:
                 break
-            # else:
-            #    self.command_io.write("ID not in the database")
-
-        return reference_id
+        return search_term
