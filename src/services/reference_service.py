@@ -59,9 +59,8 @@ class ReferenceService:
         all_refs = self.get_all()
         tagged_refs = []
         for ref in all_refs:
-            if "tag" in ref.keys():
-                if ref["tag"] == tag:
-                    tagged_refs.append(ref)
+            if tag in ref["tag"]:
+                tagged_refs.append(ref)
 
         return tagged_refs
 

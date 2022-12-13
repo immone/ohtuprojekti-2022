@@ -16,11 +16,17 @@ class Translator:
             except:
                 sys.exit("\n A database error occurred. Failed to load references.")
 
-            self.__print_all(reference_list)
+            self.__print_refs(reference_list)
 
-        if user_term[:2]
+        if user_term[:2] == "t-":
+            tag = user_term[2:]
+            self.command_io.write(tag)
+            tagged_refs = self.service.get_by_tag(tag)
+            self.command_io.write(len(tagged_refs))
+            self.__print_refs(tagged_refs)
 
-    def __print_all(self, references):
+
+    def __print_refs(self, references):
 
         for ref in references:
             self.__print_ref(ref)
