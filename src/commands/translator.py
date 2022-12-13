@@ -21,20 +21,20 @@ class Translator:
             self.__print_ref(ref)
 
     def __print_ref(self, ref):
-        authors = ""
-        for i in range(0, len(ref.authors)):
-            if i == len(ref.authors)-1:
-                authors += (" " + ref.authors[i])
-            elif i == 0:
-                authors += (ref.authors[i] + ",")
+
+        self.command_io.write(ref.keys())
+
+        self.command_io.write("@book{" + ref["reference_id"] + ",")
+
+        for key in ref.keys():
+            if key in ["tag", "reference_id", "type"]:
+                continue
+            if type(ref[key]) is list:
+                self.command_io.write("  " + key + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
+            
             else:
-                authors += (" " + ref.authors[i] + ",")
-                
-        self.command_io.write("@book{" + ref.reference_id + ",")
-        self.command_io.write("  author    = {" + authors + "}, ")
-        self.command_io.write("  title     = {" + ref.title + "},")
-        self.command_io.write("  year      = {" + str(ref.year) + "},")
-        self.command_io.write("  publisher = {" + ref.publisher + "},")
+                self.command_io.write("  " + key + "    = {" + ref[key] + "}, " )
+
         self.command_io.write("}")
     
     def __print_article(self, ref):
