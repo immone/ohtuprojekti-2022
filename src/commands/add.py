@@ -75,7 +75,7 @@ class BookAdder(Adder):
         return {
             "type": "book",
             "title": title,
-            "authors": authors,
+            "author": authors,
             "year": year,
             "publisher": publisher,
             "tags": tags
@@ -98,7 +98,7 @@ class InProceedingsAdder(Adder):
             "type": "inproceedings",
             "title": title,
             "booktitle": booktitle,
-            "authors": authors,
+            "author": authors,
             "series": series,
             "year": year,
             "pages": pages,
@@ -155,7 +155,7 @@ class MiscAdder(Adder):
         return {
             "type": "misc",
             "title": title,
-            "authors": authors,
+            "author": authors,
             "howpublished": howpublished,
             "year": year,
             "note": note,
@@ -182,7 +182,7 @@ class Add:
         # optional fields could be empty (either strings or arrays), so filter them out
         ref = {k: v for k, v in ref.items() if type(v) == int or len(v) > 0}
 
-        ref_id = self.generate_ref_id(ref["authors"] if "authors" in ref.keys() else [ref["type"]],
+        ref_id = self.generate_ref_id(ref["author"] if "author" in ref.keys() else [ref["type"]],
                 ref["year"] if "year" in ref.keys() else None)
         ref["reference_id"] = ref_id
 
