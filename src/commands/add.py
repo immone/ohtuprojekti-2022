@@ -78,7 +78,7 @@ class BookAdder(Adder):
             "author": authors,
             "year": year,
             "publisher": publisher,
-            "tags": tags
+            "tag": tags
         }
 
 
@@ -104,7 +104,7 @@ class InProceedingsAdder(Adder):
             "pages": pages,
             "publisher": publisher,
             "address": address,
-            "tags": tags
+            "tag": tags
         }
 
 
@@ -159,7 +159,7 @@ class MiscAdder(Adder):
             "howpublished": howpublished,
             "year": year,
             "note": note,
-            "tags": tags
+            "tag": tags
         }
 
 
