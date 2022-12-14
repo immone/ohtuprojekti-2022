@@ -49,11 +49,12 @@ class Search:
             fields = []
             for field in ref.values():
                 if type(field) == str:
-                    fields.append(field)
+                    fields.extend(field.split())
                 elif type(field) == list:
-                    fields.extend(field)
+                    for item in field:
+                        fields.extend(item.split())
                 elif type(field) == int:
-                    fields.extend(str(field))
+                    fields.append(str(field))
 
             for term in terms:
                 term = term.lower()
