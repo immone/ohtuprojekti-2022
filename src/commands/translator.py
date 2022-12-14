@@ -1,51 +1,62 @@
 import sys
 
 
+
 class Translator:
 
-    def __init__(self, service, io):
+    def __init__(self, service, io, searcher):
         self.service = service 
         self.command_io = io
+        self.searcher = searcher
 
     def run(self):
-        self.__print_all()
 
-    def __print_all(self):
-        self.command_io.write("Trying to print all references...")
-        try:
-            reference_list = self.service.get_all()
-        except:
-            sys.exit("\n A database error occurred. Failed to load references.")
+        user_term = self.__query_search_term()      
+        if user_term == "":
+            try:
+                reference_list = self.service.get_all()
+            except:
+                sys.exit("\n A database error occurred. Failed to load references.")
 
-        for ref in reference_list:
-            authors = ""
-            for i in range(0, len(ref.authors)):
-                if i == len(ref.authors)-1:
-                    authors += (" " + ref.authors[i])
-                elif i == 0:
-                    authors += (ref.authors[i] + ",")
-                else:
-                    authors += (" " + ref.authors[i] + ",")
-            self.__print_ref(ref, authors)
+            self.__print_refs(reference_list)
 
-    def __print_ref(self, ref, authors):
-        self.command_io.write("@book{" + ref.reference_id + ",")
-        self.command_io.write("  author    = {" + authors + "}, ")
-        self.command_io.write("  title     = {" + ref.title + "},")
-        self.command_io.write("  year      = {" + str(ref.year) + "},")
-        self.command_io.write("  publisher = {" + ref.publisher + "},")
+        if user_term[:2] == "t-":
+            tag = user_term[2:]
+            tagged_refs = self.service.get_by_tag(tag)
+            self.command_io.write("Showing " + str(len(tagged_refs)) + " matches for tag: " + tag)
+            self.__print_refs(tagged_refs)
+        
+        else:
+            found_refs = self.searcher.search(user_term.split())
+            #self.command_io.write(user_term.split())
+            self.__print_refs(found_refs)
+
+    def __print_refs(self, references):
+
+        for ref in references:
+            self.__print_ref(ref)
+
+    def __print_ref(self, ref):
+
+        self.command_io.write(ref.keys())
+
+        self.command_io.write("@book{" + ref["reference_id"] + ",")
+
+        for key in ref.keys():
+            if key in ["tag", "reference_id", "type"]:
+                continue
+            if type(ref[key]) is list:
+                self.command_io.write("  " + key + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
+            else:
+                self.command_io.write("  " + key + "    = {" + ref[key] + "}, " )
+
         self.command_io.write("}")
+    
 
-    def __query_saved_reference_id(self):
+    def __query_search_term(self):
         while True:
-            reference_id = self.command_io.read(
-                "<A> to print all references: ", "You need to input <A>")
-
-            # if self.service.id_exists(reference_id):
-            #    break
-            if reference_id == "A":
+            search_term = self.command_io.read("Give search terms or t-\'tag\' for what" + 
+                                               "you want to translate or <empty> to translate all references: ")
+            if search_term == "" or search_term:
                 break
-            # else:
-            #    self.command_io.write("ID not in the database")
-
-        return reference_id
+        return search_term
