@@ -50,7 +50,7 @@ def add():
 
 
 def bibtex():
-    translator = Translator(ReferenceService(), ConsoleIO())
+    translator = Translator(ReferenceService(), ConsoleIO(), Search(ReferenceService(), ConsoleIO()))
     translator.run()
 
 

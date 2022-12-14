@@ -1,11 +1,13 @@
 import sys
 
 
+
 class Translator:
 
-    def __init__(self, service, io):
+    def __init__(self, service, io, searcher):
         self.service = service 
         self.command_io = io
+        self.searcher = searcher
 
     def run(self):
 
@@ -20,11 +22,14 @@ class Translator:
 
         if user_term[:2] == "t-":
             tag = user_term[2:]
-            self.command_io.write(tag)
             tagged_refs = self.service.get_by_tag(tag)
-            self.command_io.write(len(tagged_refs))
+            self.command_io.write("Showing " + str(len(tagged_refs)) + " matches for tag: " + tag)
             self.__print_refs(tagged_refs)
-
+        
+        else:
+            found_refs = self.searcher.search(user_term.split())
+            #self.command_io.write(user_term.split())
+            self.__print_refs(found_refs)
 
     def __print_refs(self, references):
 
@@ -50,7 +55,7 @@ class Translator:
 
     def __query_search_term(self):
         while True:
-            search_term = self.command_io.read("Give a search term or t-\'tag\' for what" + 
+            search_term = self.command_io.read("Give search terms or t-\'tag\' for what" + 
                                                "you want to translate or <empty> to translate all references: ")
             if search_term == "" or search_term:
                 break

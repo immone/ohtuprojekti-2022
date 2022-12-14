@@ -25,10 +25,10 @@ class Search:
         self.__io = io
 
     def run(self):
+
         terms = self.__io.read("Enter search terms: ", " ... please provide at least one search term")
         terms = terms.split()
-
-        refs = self.__search(terms)
+        refs = self.search(terms)
         n_refs = len(refs)
 
         if n_refs > 0:
@@ -39,7 +39,7 @@ class Search:
         else:
             self.__io.write("0 references matched the search terms")
 
-    def __search(self, terms):
+    def search(self, terms):
         all_refs = self.__service.get_all()
         results = []
         for ref in all_refs:
