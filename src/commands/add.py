@@ -78,7 +78,7 @@ class BookAdder(Adder):
             "author": authors,
             "year": year,
             "publisher": publisher,
-            "tags": tags
+            "tag": tags
         }
 
 
@@ -104,7 +104,7 @@ class InProceedingsAdder(Adder):
             "pages": pages,
             "publisher": publisher,
             "address": address,
-            "tags": tags
+            "tag": tags
         }
 
 
@@ -130,7 +130,7 @@ class InProceedingsAdder(Adder):
                 " ...... please provide a valid series (max length: 300 characters)")
 
     def __query_pages(self):
-        pages_regex = "^[1-9]+--[1-9]+$"
+        pages_regex = "^[1-9][0-9]*--[1-9][0-9]*$"
 
         while True:
             pages = self.io.read(" ... enter pages (format: N--M) (optional): ")
@@ -159,7 +159,7 @@ class MiscAdder(Adder):
             "howpublished": howpublished,
             "year": year,
             "note": note,
-            "tags": tags
+            "tag": tags
         }
 
 
