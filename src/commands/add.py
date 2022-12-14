@@ -130,7 +130,7 @@ class InProceedingsAdder(Adder):
                 " ...... please provide a valid series (max length: 300 characters)")
 
     def __query_pages(self):
-        pages_regex = "^[1-9]+--[1-9]+$"
+        pages_regex = "^[1-9][0-9]*--[1-9][0-9]*$"
 
         while True:
             pages = self.io.read(" ... enter pages (format: N--M) (optional): ")
