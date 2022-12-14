@@ -4,10 +4,12 @@ import sys
 
 class Translator:
 
-    def __init__(self, service, io, searcher):
+    def __init__(self, service, io, searcher=None):
         self.service = service 
         self.command_io = io
-        self.searcher = searcher
+        
+        if searcher is not None:
+            self.searcher = searcher
 
     def run(self):
 
@@ -38,7 +40,6 @@ class Translator:
 
     def __print_ref(self, ref):
 
-        self.command_io.write(ref.keys())
 
         self.command_io.write("@book{" + ref["reference_id"] + ",")
 
@@ -46,16 +47,16 @@ class Translator:
             if key in ["tag", "reference_id", "type"]:
                 continue
             if type(ref[key]) is list:
-                self.command_io.write("  " + key + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
+                self.command_io.write("  " + f"{key:12}" + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
             else:
-                self.command_io.write("  " + key + "    = {" + ref[key] + "}, " )
+                self.command_io.write("  " + f"{key:12}" + "    = {" + ref[key] + "}, " )
 
         self.command_io.write("}")
     
 
     def __query_search_term(self):
         while True:
-            search_term = self.command_io.read("Give search terms or t-\'tag\' for what" + 
+            search_term = self.command_io.read("Give search terms or t-\'tag\' for what " + 
                                                "you want to translate or <empty> to translate all references: ")
             if search_term == "" or search_term:
                 break
