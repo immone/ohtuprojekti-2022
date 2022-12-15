@@ -11,8 +11,7 @@ class List():
         tag_filter = self.io.read("Would you like to filter the listing according to some tags? (y/n) ",
                                   "Please indicate your answer")
         while tag_filter not in ["y", "n", "yes", "no"]:
-            print(tag_filter)
-            self.io.read("Would you like to filter the listing according to some tags? (y/n) ",
+            tag_filter = self.io.read("Would you like to filter the listing according to some tags? (y/n) ",
                          "Please indicate your answer")
         if tag_filter in ["n", "no"]:
             self.__no_tag()
@@ -44,7 +43,7 @@ class List():
             self.io.read(
                 "Would you like the search to include matches that contain all or any of the given tags? (all/any)",
                 "Please indicate your answer")
-            
+
         if operation == "any":
             tag_refs = []
             for tag in tags_parsed:
