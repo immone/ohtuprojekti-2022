@@ -9,25 +9,31 @@ def main():
     if len(args) == 0:
         menu_io.write(Help.get("file"))
         while True:
-            command = menu_io.read("Enter command: ", "Please provide a command")
-            if command == "add":
-                add()
-            elif command == "bibtex":
-                bibtex()
-            elif command == "help":
-                menu_io.write(Help.get("file"))
-            elif command == "search":
-                search()
-            elif command == "edit":
-                edit()
-            elif command == "list":
-                list()
-            elif command == "delete":
-                delete()
-            elif command == "exit":
-                return
+            command_in = menu_io.read("Enter command: ", "Please provide a command")
+            command = command_in.split(" ")
+            if len(command) == 1:
+                command = command[0]
+                if command == "add":
+                    add()
+                elif command == "bibtex":
+                    bibtex()
+                elif command == "help":
+                    menu_io.write(Help.get("file"))
+                elif command == "search":
+                    search()
+                elif command == "edit":
+                    edit()
+                elif command == "list":
+                    list()
+                elif command == "delete":
+                    delete()
+                elif command == "exit":
+                    return
+            elif len(command) == 4 and command[0] == "edit":
+                    edit(command[1], command[2], command[3])
             else:
                 menu_io.write(Help.get("file"))
+
 
     if args[0] == "add":
         add()
@@ -63,11 +69,11 @@ def delete():
     delete = Delete(ReferenceService(), ConsoleIO())
     delete.run()
 
-def edit():
+def edit(id=None, field=None, value=None):
     edit = Edit(ReferenceService(), ConsoleIO())
-    edit.run()
+    edit.run(id, field, value)
 
-def list():
+def list(type=None):
     list = List(ReferenceService(), ConsoleIO())
     list.run()
 
