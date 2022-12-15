@@ -41,13 +41,13 @@ class Translator:
     def __print_ref(self, ref):
 
 
-        self.command_io.write("@book{" + ref["reference_id"] + ",")
+        self.command_io.write("@"+ ref["type"] + "{" + ref["reference_id"] + ",")
 
         for key in ref.keys():
             if key in ["tag", "reference_id", "type"]:
                 continue
             if type(ref[key]) is list:
-                self.command_io.write("  " + f"{key:12}" + "    = {" + str(ref[key])[1:-1].replace("'","") + "}, ")
+                self.command_io.write("  " + f"{key:12}" + "    = {" + str(ref[key])[1:-1].replace("'","").replace(",",";") + "}, ")
             else:
                 self.command_io.write("  " + f"{key:12}" + "    = {" + ref[key] + "}, " )
 
