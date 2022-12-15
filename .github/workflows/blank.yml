@@ -50,3 +50,5 @@ jobs:
       - name: upload coverage to codecov
         run: bash <(curl -s https://codecov.io/bash)
       
+      - name: robotTests
+        run: poetry run robot src/tests
