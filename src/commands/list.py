@@ -40,7 +40,7 @@ class List():
 
         # union or intersection of search words
         while operation not in ["all", "any"]:
-            self.io.read(
+            operation = self.io.read(
                 "Would you like the search to include matches that contain all or any of the given tags? (all/any)",
                 "Please indicate your answer")
 
@@ -53,7 +53,6 @@ class List():
             for tag in tags_parsed:
                 candidate_refs = self.service.get_by_tag(tag)
                 for candidate in candidate_refs:
-                    print(candidate["tag"], tags_parsed)
                     if all(tag in candidate["tag"] for tag in tags_parsed) and candidate not in tag_refs:
                         tag_refs.append(candidate)
 

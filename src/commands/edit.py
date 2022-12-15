@@ -10,12 +10,32 @@ class Edit():
         self.io = io
         self.service = ReferenceService()
 
-    def run(self):
-        self.io.write("Attempting to edit a reference..")
+## TODO: consider fixing one-line edits so that there is no danger of inserting wrong type of data in the DB
 
+    def run(self, *params):
+        self.io.write("Attempting to edit a reference..")
+        if len(params) == 3:
+            if all(e == None for e in params):
+                self.__edit_whole_reference()
+            elif all(e != None for e in params):
+                self.io.write("Insufficient number of parameters. Exiting..")
+        else:
+            self.io.write("Insufficient number of parameters. Exiting..")
+
+    def __edit_one_liner(self, params):
+        if not self.repository.id_exists(params[0]):
+            self.io.write("Cannot find ID. Exiting..")
+            return
+        try:
+            self.service.put(params[0], params[1], params[2])
+            self.io.write("\nReference edited.")
+        except:
+            sys.exit(
+                "\nAn error occurred while trying to edit reference. Exiting..")
+
+    def __edit_whole_reference(self):
         id_to_edit = self.__check_id_exists()
         type_to_edit = self.service.get_type(id_to_edit)
-
 
         if type_to_edit == "book":
             new_ref_dict = self.__edit_book()
@@ -28,7 +48,7 @@ class Edit():
 
         for key in new_ref_dict:
             ref = self.service.get(id_to_edit)
-            if len(new_ref_dict[key]) == 0:
+            if len(str(new_ref_dict[key])) == 0 or (key in ["tags, author"] and new_ref_dict[key] == []):
                 new_ref_dict[key] = ref[key]
         try:
             for val in new_ref_dict:
