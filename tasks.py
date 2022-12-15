@@ -30,7 +30,7 @@ def test(ctx):
 
 @task
 def lint(ctx):
-    ctx.run("pylint src --treshold 2", pty=True)
+    ctx.run("pylint src --threshold 8", pty=True)
 
 @task
 def format(ctx):  # pylint: disable=redefined-builtin
