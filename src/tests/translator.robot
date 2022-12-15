@@ -13,4 +13,9 @@ Tagged References With Tag
 
     Get With Tag  
 
+Search Term References
+    Input Text  kirja
+
+    Get With Search
+
 

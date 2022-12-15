@@ -55,4 +55,20 @@ class TranslatorLibrary:
                                self.search_mock)
         translate.run()
 
-        self.service_mock.get_by_tag.assert_called_with("ttt")
+        self.service_mock.get_by_tag.assert_called_with(self.inputs[0][2:])
+
+    def get_with_search(self):
+
+        def post(self):
+                for e in self.inputs:
+                    self.db_model.append(e)
+        
+        self.io_mock.read.side_effect = self.inputs
+        self.service_mock.post.side_effect = post
+        
+        translate = Translator(self.service_mock,
+                               self.io_mock,
+                               self.search_mock)
+        translate.run()
+        
+        self.search_mock.search.assert_called_with([self.inputs[0]])
