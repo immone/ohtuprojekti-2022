@@ -27,7 +27,7 @@ class ReferenceRepository:
             (reference_id,)
         ).fetchone()
 
-    def __get_field(self, field_name: str):
+    def get_field(self, field_name: str):
         return self.__connection.execute(
             """
             SELECT
@@ -174,7 +174,7 @@ class ReferenceRepository:
         for field_name, value in values.items():
             if not self.__included_in_fields(type_name, field_name):
                 continue
-            field_id = self.__get_field(field_name)["field_id"]
+            field_id = self.get_field(field_name)["field_id"]
             if isinstance(value, list):
                 for v in value:
                     self.__post_value(reference_id, field_id, v)
@@ -183,16 +183,14 @@ class ReferenceRepository:
         self.__connection.commit()
 
     def __put_value(self, reference_id, field_id, value):
+        # insert values to value table
         self.__connection.execute(
             """
-            UPDATE
-                value
-            SET
-                value = ?
-            WHERE
-                reference_id = ? AND field_id = ?
+            INSERT INTO
+                value (reference_id, field_id, value)
+                VALUES (?, ?, ?)
             """,
-            (value, reference_id, field_id)
+            (reference_id, field_id, value)
         )
 
     def put(self, reference_id: str, field: str, value: str) -> None:
@@ -201,7 +199,7 @@ class ReferenceRepository:
             return
         if not self.__included_in_fields(type_name["type_name"], field):
             return
-        field_id = self.__get_field(field)["field_id"]
+        field_id = self.get_field(field)["field_id"]
         self.__put_value(reference_id, field_id, value)
         self.__connection.commit()
 
@@ -223,6 +221,17 @@ class ReferenceRepository:
                 reference_id = ?
             """,
             (reference_id,)
+        )
+
+    def delete_field_values(self, reference_id, field_id):
+        self.__connection.execute(
+            """
+            DELETE FROM
+                value
+            WHERE
+                reference_id = ? AND field_id = ?
+            """,
+            (reference_id, field_id)
         )
 
     def delete_all(self):
