@@ -36,7 +36,7 @@ jobs:
         run: poetry install
 
       - name: run pylint
-        run: poetry run invoke lint
+        run: poetry run pylint src --threshold 8
         
       - name: run pytest
         run: poetry run pytest
