@@ -31,21 +31,56 @@ class AddLibrary:
             raise AssertionError(
                 f"{expected} was not in command output {output}")
 
-    def reference_should_be_saved_with_provided_fields(self):
-        repository_mock = Mock()
-        repository_mock.id_exists.return_value = False
+    def submit_reference(self):
+        self.repository_mock = Mock()
+        self.repository_mock.id_exists.return_value = False
 
         io_mock = Mock()
         io_mock.read.side_effect = self.inputs
 
-        add = Add(repository_mock, io_mock)
-        add.run()
+        self.add = Add(self.repository_mock, io_mock)
+        self.add.run()
 
-        repository_mock.post.assert_called_with(Reference(
-            reference_id=add.generate_ref_id([self.inputs[1]], int(self.inputs[2])),
-            title=self.inputs[0],
-            authors=[self.inputs[1]],
-            year=int(self.inputs[2]),
-            publisher=self.inputs[3],
-            tags=[self.inputs[4]]
-        ))
+    def book_reference_should_be_saved_with_provided_fields(self):
+        self.submit_reference()
+        
+        self.repository_mock.post.assert_called_with({
+            "type": "book",
+            "title": self.inputs[1],
+            "author": [self.inputs[2]],
+            "year": int(self.inputs[3]),
+            "publisher": self.inputs[4],
+            "tag": [self.inputs[5]],
+            "reference_id": self.add.generate_ref_id([self.inputs[2]], int(self.inputs[3]))
+        })
+
+    def inproceedings_reference_should_be_saved_with_provided_fields(self):
+        self.submit_reference()
+        
+        self.repository_mock.post.assert_called_with({
+            "type": "inproceedings",
+            "title": self.inputs[1],
+            "booktitle": self.inputs[2],
+            "author": [self.inputs[3]],
+            "series": self.inputs[4],
+            "year": int(self.inputs[5]),
+            "pages": self.inputs[6],
+            "publisher": self.inputs[7],
+            "address": self.inputs[8],
+            "tag": [self.inputs[9]],
+            "reference_id": self.add.generate_ref_id([self.inputs[3]], int(self.inputs[5]))
+        })
+
+    def misc_reference_should_be_saved_with_provided_fields(self):
+        self.submit_reference()
+        
+        self.repository_mock.post.assert_called_with({
+            "type": "misc",
+            "title": self.inputs[1],
+            "author": [self.inputs[2]],
+            "howpublished": self.inputs[3],
+            "year": int(self.inputs[4]),
+            "note": self.inputs[5],
+            "tag": [self.inputs[6]],
+            "reference_id": self.add.generate_ref_id([self.inputs[2]], int(self.inputs[4]))
+        })

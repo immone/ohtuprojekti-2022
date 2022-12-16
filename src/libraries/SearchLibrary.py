@@ -4,41 +4,44 @@ import sys
 sys.path.append(sys.path[0] + "/..")
 
 
-from entities.reference import Reference
-from commands.search import Search
+from commands.search import Search, ref_to_str
 
 
-SMITH_REF = Reference(
-    reference_id="Smith2019",
-    authors=["Jane Smith", "John Doe"],
-    title="The Origins of Life: A Comprehensive Guide",
-    year=2019,
-    publisher="Oxford University Press"
-)
+SMITH_REF = {
+    "type": "book",
+    "reference_id": "Smith2019",
+    "author": ["Jane Smith", "John Doe"],
+    "title": "The Origins of Life: A Comprehensive Guide",
+    "year": 2019,
+    "publisher": "Oxford University Press"
+}
 
-RODR_REF = Reference(
-    reference_id="Rodriguez2020",
-    authors=["Maria Rodriguez", "David Johnson"],
-    title="Advanced Quantum Mechanics: Theory and Applications",
-    year=2020,
-    publisher="Cambridge University Press"
-)
+RODR_REF = {
+    "type": "book",
+    "reference_id": "Rodriguez2020",
+    "author": ["Maria Rodriguez", "David Johnson"],
+    "title": "Advanced Quantum Mechanics: Theory and Applications",
+    "year": 2020,
+    "publisher": "Cambridge University Press"
+}
 
-JOHNSON_REF = Reference(
-    reference_id="Johnson2021",
-    authors=["Sarah Johnson", "William Thompson"],
-    title="The Evolution of Human Language: From Grunts to Grammar",
-    year=2021,
-    publisher="Harvard University Press"
-)
+JOHNSON_REF = {
+    "type": "book",
+    "reference_id": "Johnson2021",
+    "author": ["Sarah Johnson", "William Thompson"],
+    "title": "The Evolution of Human Language: From Grunts to Grammar",
+    "year": 2021,
+    "publisher": "Harvard University Press"
+}
 
-WILLIAMS_REF = Reference(
-    reference_id="Williams2022",
-    authors=["David Williams", "Elizabeth Taylor"],
-    title="The Future of Artificial Intelligence: Implications and Opportunities",
-    year=2022,
-    publisher="Princeton University Press"
-)
+WILLIAMS_REF = {
+    "type": "book",
+    "reference_id": "Williams2022",
+    "author": ["David Williams", "Elizabeth Taylor"],
+    "title": "The Future of Artificial Intelligence: Implications and Opportunities",
+    "year": 2022,
+    "publisher": "Princeton University Press"
+}
 
 REFS_DICT = {
     "SMITH": SMITH_REF,
@@ -68,15 +71,13 @@ class SearchLibrary:
         search.run()
 
         write_args = [args[0][0] for args in io_mock.write.call_args_list]
-        
-        print(f"WRITE ARGS: {write_args}")
-        
+                
         expected = expected.split()
 
         for e in expected:
             found = False
             for arg in write_args:
-                if str(REFS_DICT[e]) in arg:
+                if ref_to_str(REFS_DICT[e]) in arg:
                     found = True
 
             if not found:
