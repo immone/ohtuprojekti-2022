@@ -2,9 +2,8 @@ from services.reference_service import ReferenceService
 import sys
 
 class List():
-    def __init__(self, repository, io):
-        self.repository = repository
-        self.service = ReferenceService()
+    def __init__(self, service, io):
+        self.service = service
         self.io = io
 
     def run(self):

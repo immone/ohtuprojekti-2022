@@ -1,81 +1,62 @@
 import unittest
 from unittest.mock import Mock
-from repositories.reference_repository import ReferenceRepository
+from services import ReferenceService
 from commands.delete import Delete
-from entities.reference import Reference
-from database_connection import get_database_connection
-
 
 class TestDelete(unittest.TestCase):
     def setUp(self):
-        self.connection = get_database_connection()
-        self.repository_mock = Mock()
-        self.mock_reference = Reference(
-            reference_id="id",
-            authors=["author"],
-            title="value",
-            year=1234,
-            publisher="value"
-        )
-        self.repository_mock.post(self.mock_reference)
+        self.service = ReferenceService()
+        self.service.delete_all()
+        self.reference = {
+            "reference_id": "2",
+            "type": "book",
+            "author": ["Leonard Susskind", "George Hrabovsky"],
+            "title": "Classical mechanics: the theoretical minimum",
+            "publisher": "Penguin Random House",
+            "year": "2014",
+            "tag": ["test_tag2", "test_tag_3"]
+        }
+        self.reference2 = {
+            "reference_id": "3",
+            "type": "inproceedings",
+            "author": ["Holleis, Paul", "Wagner, Matthias", "Koolwaaij, Johan"],
+            "title": "Studying mobile context-aware social services in the wild",
+            "booktitle": "Proc. of the 6th Nordic Conf. on Human-Computer Interaction",
+            "series": "NordiCHI",
+            "year": "2010",
+            "pages": "207--216",
+            "publisher": "ACM",
+            "tag": ["test_tag3", "test_tag_4"]
+        }
+        self.service_mock = Mock()
         self.io_mock = Mock()
 
     def test_delete_method_of_repository_called(self):
-        self.io_mock.read.side_effect = ["id"]
-        delete = Delete(self.repository_mock, self.io_mock)
+        self.io_mock.read.return_value = "id"
+        delete = Delete(self.service_mock, self.io_mock)
         delete.run()
-        self.repository_mock.delete.assert_called_with("id")
+        self.service_mock.delete.assert_called_with("id")
 
     def test_delete_when_id_doesnt_exist(self):
-        self.reference_repository = ReferenceRepository(self.connection)
-        self.mock_reference = Reference(
-            reference_id="id",
-            authors=["author"],
-            title="field",
-            year=1234,
-            publisher="field"
-        )
-        self.reference_repository.post(self.mock_reference)
-        self.io_mock.read.side_effect = ["id2"]
-        delete = Delete(self.reference_repository, self.io_mock)
-        self.assertRaises(StopIteration, delete.run)
+        self.service_mock.id_exists.return_value = False
+        delete = Delete(self.service_mock, self.io_mock)
+        delete.run()
+        self.assertTrue("No such reference ID exists\n" in self.io_mock.write.call_args.args[0])
 
     def test_when_exists(self):
-        self.reference_repository = ReferenceRepository(self.connection)
-        self.mock_reference = Reference(
-            reference_id="id",
-            authors=["author"],
-            title="field",
-            year=1234,
-            publisher="field"
-        )
-        self.io_mock.read.side_effect = ["id"]
-        delete = Delete(self.reference_repository, self.io_mock)
+        self.service.post(self.reference)
+        self.io_mock.read.return_value = "2"
+        delete = Delete(self.service, self.io_mock)
         delete.run()
-        self.assertFalse(self.reference_repository.id_exists("id"))
-        self.assertRaises(StopIteration, delete.run)
+        print(self.io_mock.write.call_args.args[0])
+        print(self.io_mock.write.call_args.args[0])
+        self.assertTrue("Reference deleted." in self.io_mock.write.call_args.args[0])
 
     def test_multiple(self):
-        self.reference_repository = ReferenceRepository(self.connection)
-        self.mock_reference = Reference(
-            reference_id="id2",
-            authors=["author"],
-            title="field",
-            year=1234,
-            publisher="field"
-        )
-        self.mock_reference2 = Reference(
-            reference_id="id3",
-            authors=["author2"],
-            title="field2",
-            year=1234,
-            publisher="field2"
-        )
-        self.reference_repository.post(self.mock_reference)
-        self.reference_repository.post(self.mock_reference2)
-        self.io_mock.read.side_effect = ["id2"]
-        delete = Delete(self.reference_repository, self.io_mock)
+        self.service.post(self.reference)
+        self.service.post(self.reference2)
+        self.io_mock.read.return_value = "2"
+        delete = Delete(self.service, self.io_mock)
         delete.run()
-        self.assertFalse(self.reference_repository.id_exists("id2"))
-        self.assertTrue(self.reference_repository.id_exists("id3"))
-
+        self.assertFalse(self.service.id_exists("2"))
+        self.assertTrue(self.service.id_exists("3"))

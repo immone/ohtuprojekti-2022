@@ -79,7 +79,6 @@ class TestAdd(unittest.TestCase):
         search = Search(self.service_mock, self.io_mock)
         search.run()
 
-        print(self.io_mock.write.call_args.args[0])
         self.assertTrue(ref_to_str(SMITH_REF) in self.io_mock.write.call_args.args[0])
 
     def test_search_by_publisher_multiple_results(self):

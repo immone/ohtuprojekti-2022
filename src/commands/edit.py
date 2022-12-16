@@ -5,10 +5,9 @@ from entities.reference import Reference
 from services.reference_service import ReferenceService
 
 class Edit():
-    def __init__(self, repository, io):
-        self.repository = repository
+    def __init__(self, service, io):
         self.io = io
-        self.service = ReferenceService()
+        self.service = service
 
 ## TODO: parameters for one-liner
 
@@ -19,7 +18,7 @@ class Edit():
 # TODO: fix one-liner s.t. there is no danger of inputting wrong type of data into the DB
 
     def __edit_one_liner(self, params):
-        if not self.repository.id_exists(params[0]):
+        if not self.service.id_exists(params[0]):
             self.io.write("Cannot find ID. Exiting..")
             return
         try:
@@ -31,8 +30,9 @@ class Edit():
 
     def __edit_whole_reference(self):
         id_to_edit = self.__check_id_exists()
+        if id_to_edit == None:
+            return
         type_to_edit = self.service.get_type(id_to_edit)
-
         if type_to_edit == "book":
             new_ref_dict = self.__edit_book()
         elif type_to_edit == "inproceedings":
@@ -57,10 +57,9 @@ class Edit():
     def __check_id_exists(self):
         reference_id = self.io.read("Enter reference ID: ",
                                     "Please provide a reference ID")
-        while not self.repository.id_exists(reference_id):
+        if not self.service.id_exists(reference_id):
             self.io.write("No such reference ID exists")
-            reference_id = self.io.read("Enter reference ID: ",
-                                        "Please provide a reference ID")
+            reference_id = None
         return reference_id
 
     def __edit_book(self):
