@@ -1,9 +1,10 @@
 import sys
-
+from services.reference_service import ReferenceService
 
 class Delete:
     def __init__(self, repository, io):
         self.repository = repository
+        #self.service = ReferenceService()
         self.io = io
 
     def run(self):

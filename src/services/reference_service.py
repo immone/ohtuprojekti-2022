@@ -71,8 +71,16 @@ class ReferenceService:
         del reference["type"]
         self.__reference_repository.post(id, type, reference)
 
-    def put(self, reference_id: str, field: str, value: str) -> None:
-        self.__reference_repository.put(reference_id, field, value)
+    def put(self, reference_id: str, field: str, value) -> None:
+        field_id = self.get_field(field)
+        if field_id is None:
+            return
+        self.__reference_repository.delete_field_values(reference_id, field_id)
+        if isinstance(value, list):
+            for val in value:
+                self.__reference_repository.put(reference_id, field, val)
+        else:
+            self.__reference_repository.put(reference_id, field, value)
 
     def delete(self, reference_id: int) -> None:
         self.__reference_repository.delete(reference_id)

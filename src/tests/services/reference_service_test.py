@@ -153,6 +153,11 @@ class ReferenceServiceTest(unittest.TestCase):
         self.service.put(1, "invalid_field", "new_value")
         self.assertEqual(self.article["title"], self.service.get(1)["title"])
 
+    def test_put_list(self):
+        self.service.post(self.article)
+        self.service.put(1, "tag", ["environment", "economy"])
+        self.assertEqual(["environment", "economy"], self.service.get(1)["tag"])
+
     def test_delete(self):
         self.service.post(self.article)
         self.service.delete(1)
