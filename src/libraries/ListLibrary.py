@@ -4,28 +4,33 @@ import sys
 sys.path.append(sys.path[0] + "/..")
 
 from entities.reference import Reference
+from services.reference_service import ReferenceService
 from commands.edit import Edit
-from commands.l     ist import List
+from commands.list import List
 
-class EditLibrary:
+class ListLibrary:
     def __init__(self):
         self.db_model = []
+        self.tagged = False
         self.inputs = []
+        self.service_mock = Mock()
         self.repository_mock = Mock()
         self.io_mock = Mock()
+        self.tags = []
 
         def post(tag=None):
             for e in self.inputs:
                 if tag != None:
                     e = e + tag
+                    self.tags.append(e)
                 self.db_model.append(e)
         def put():
             return self.inputs[0] == self.db_model[0]
 
+        self.service_mock.get_by_tag.return_value = self.tags
         self.io_mock.read.side_effect = self.inputs
         self.repository_mock.post.side_effect = post
         self.repository_mock.put.side_effect = put
-
 
     def input_text(self, text):
         self.inputs.append(text)

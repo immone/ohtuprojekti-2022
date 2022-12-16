@@ -3,7 +3,6 @@ from unittest.mock import Mock
 import sys
 sys.path.append(sys.path[0] + "/..")
 
-from services.reference_service import ReferenceService
 from entities.reference import Reference
 from commands.edit import Edit
 from commands.add import Add
