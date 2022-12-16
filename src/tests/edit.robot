@@ -23,7 +23,7 @@ Nonexistent Id Should Not Work
 
     Output Contains  No such reference ID exists
 
-Book Reference Should Be Edited Correctly
+Reference Should Be Edited Correctly
     Input Text  Example Title
     Input Text  Example Author
     Input Text  2022  # Year of publication
@@ -39,26 +39,4 @@ Book Reference Should Be Edited Correctly
     Input Text  2022  # Year of publication
     Input Text  Example Publisher
 
-    Book Reference Should Be Edited Correctly
-
-Proceedings Reference Should Be Edited Correctly
-    Input Text  Example Title
-    Input Text  Example BookTitle
-    Input Text  Example Author
-    Input Text  Example Series
-    Input Text  2022  # Year of publication
-    Input Text  1--2
-    Input Text  Example Publisher
-    Input Text  Example Address
-    Input Text  ExampleTag
-
-    Add Inputs
-    Reset Input
-
-    Input Text  Author2022
-    Input Text  Example Title
-    Input Text  Example Author
-    Input Text  2022  # Year of publication
-    Input Text  Example Publisher
-
-    Proceedings Reference Should Be Edited Correctly
+    Reference Should Be Edited Correctly

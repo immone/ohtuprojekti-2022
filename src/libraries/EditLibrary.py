@@ -57,7 +57,7 @@ class EditLibrary:
             raise AssertionError(
                 f"{expected} was not in command output {output}")
 
-    def book_reference_should_be_edited_correctly(self):
+    def reference_should_be_edited_correctly(self):
         add = Add(self.repository_mock, self.io_mock)
         try:
             edit = Edit(self.repository_mock, self.io_mock)
@@ -76,27 +76,5 @@ class EditLibrary:
             )
         )
 
-    def proceedings_reference_should_be_edited_correctly(self):
-        add = Add(self.repository_mock, self.io_mock)
-        try:
-            edit = Edit(self.repository_mock, self.io_mock)
-            edit.run()
-        except StopIteration:
-            return "Wrong parameters"
-
-        self.repository_mock.put.assert_called_with(
-            Reference(
-                reference_id=add.generate_ref_id([self.inputs[2]], int(self.inputs[4])),
-                title=self.inputs[0],
-                booktitle = self.inputs[1],
-                authors=[self.inputs[2]],
-                series = self.inputs[3],
-                year=int(self.inputs[4]),
-                pages=self.inputs[5],
-                publisher=self.inputs[6],
-                address=self.inputs[7],
-                tags=[self.inputs[8]]
-            )
-        )
 
 
