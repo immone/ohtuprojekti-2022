@@ -32,3 +32,8 @@ Multiple References Can Be Searched With Complicated Search Terms
     Input Terms  origins implications and maria 19  # search terms from every reference except for JOHNSON
 
     Results Should Contain  SMITH RODRIGUEZ WILLIAMS
+
+Search Tolerates Typos
+    Input Terms  wuantum  # misspelled "quantum"
+
+    Results Should Contain  RODRIGUEZ
