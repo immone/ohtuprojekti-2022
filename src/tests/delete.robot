@@ -39,11 +39,11 @@ Two Book References Should Be Deleted Correctly
     Add Inputs
     Reset Input
 
-    Input Text  Author2022
+    Input Text  Example Title2
     Reference Should Be Deleted Correctly
 
     Reset Input
 
-    Input Text  Author2021
+    Input Text  Example Title
     Add Inputs
     Reference Should Be Deleted Correctly

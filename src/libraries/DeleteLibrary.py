@@ -11,18 +11,6 @@ class DeleteLibrary():
         self.repository_mock = Mock()
         self.io_mock = Mock()
 
-    def input_text(self, text):
-        self.inputs.append(text)
-
-    def reset_input(self):
-        self.inputs = []
-
-    def add_inputs(self):
-        self.repository_mock.post()
-
-    def output_contains(self, expected):
-        self.io_mock.read.side_effect = self.inputs
-
         def post():
             for e in self.inputs:
                 self.db_model.append(e)
@@ -38,6 +26,17 @@ class DeleteLibrary():
         self.repository_mock.delete.side_effect = delete
         self.repository_mock.id_exists.side_effect = id_exists
 
+    def input_text(self, text):
+        self.inputs.append(text)
+
+    def reset_input(self):
+        self.inputs = []
+
+    def add_inputs(self):
+        self.repository_mock.post()
+
+    def output_contains(self, expected):
+        self.io_mock.read.side_effect = self.inputs
         try:
             delete = Delete(self.repository_mock, self.io_mock)
             delete.run()
@@ -52,16 +51,6 @@ class DeleteLibrary():
 
 
     def reference_should_be_deleted_correctly(self):
-            def post():
-                for e in self.inputs:
-                    self.db_model.append(e)
-
-            def delete(input):
-                if input in self.db_model:
-                    self.db_model.remove(input)
-
-            self.repository_mock.post.side_effect = post
-            self.repository_mock.delete.side_effect = delete
             self.io_mock.read.side_effect = self.inputs
 
             try:
