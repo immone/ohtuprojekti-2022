@@ -10,17 +10,13 @@ class Edit():
         self.io = io
         self.service = ReferenceService()
 
-## TODO: consider fixing one-line edits so that there is no danger of inserting wrong type of data in the DB
+## TODO: parameters for one-liner
 
     def run(self, *params):
         self.io.write("Attempting to edit a reference..")
-        if len(params) == 3:
-            if all(e == None for e in params):
-                self.__edit_whole_reference()
-            elif all(e != None for e in params):
-                self.io.write("Insufficient number of parameters. Exiting..")
-        else:
-            self.io.write("Insufficient number of parameters. Exiting..")
+        self.__edit_whole_reference()
+
+# TODO: fix one-liner s.t. there is no danger of inputting wrong type of data into the DB
 
     def __edit_one_liner(self, params):
         if not self.repository.id_exists(params[0]):
@@ -45,7 +41,6 @@ class Edit():
             new_ref_dict = self.__edit_misc()
         else:
             sys.exit("Could not find the type of the reference. Exiting..")
-
         for key in new_ref_dict:
             ref = self.service.get(id_to_edit)
             if len(str(new_ref_dict[key])) == 0 or (key in ["tags, author"] and new_ref_dict[key] == []):
@@ -74,7 +69,6 @@ class Edit():
         year = self.__query_year()
         publisher = self.io.read(" ... enter publisher (press enter to retain old value):")
         tags = self.__query_tags()
-
         new_ref_object = {
             "type": "book",
             "title": title,
