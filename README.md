@@ -7,7 +7,7 @@
 
 ## [Instructions](https://github.com/immone/ohtuprojekti-2022/blob/main/docs/instructions.md)
 
-## Loppuraportti(https://docs.google.com/document/d/1bTTEYCGNABgzjgRlyJbl-xXoNUzh7Q3G9nVJM-C6Uy8/edit?usp=sharing)
+## [Loppuraportti](https://docs.google.com/document/d/1bTTEYCGNABgzjgRlyJbl-xXoNUzh7Q3G9nVJM-C6Uy8/edit?usp=sharing)
 
 # Definition of Done
 
